@@ -1,0 +1,30 @@
+{% extends "base2.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container" style="padding-top: 100px; padding-bottom : 50px ;">
+  <h4  style="margin-top : 100px ;">Food Menu <i class="fa fa-menu" aria-hidden="true"></i></h4>
+  <br>
+  <div class="row">
+    {% for food in food_items  %}
+      <div class="col-lg-4 col-md-4 col-sm-4">
+          <img src="{{ food.food_image.url}}" class="img-fluid"  style="width: 300px; height: 200px; object-fit: cover; border-radius: 15px;">
+          <h4>{{food.food_name}}</h4>
+          <h5><span>{{food.category}} </h5> 
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <p> {{food.description}}</p>
+          <p> <b> Nrs. {{food.total_cost}} </b></p>
+      </div>
+      {% endfor %}
+
+  </div>
+</div>
+
+
+{% endblock content %}

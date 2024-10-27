@@ -1,0 +1,16 @@
+.checked {color: orange;}
+h1{color:#fff}
+img{border-radius:30px;padding-bottom:10px;}
+p{padding-top:0px;font-style:italic;}
+.flr{float:right}
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    margin-top: 50px;
+    background-image: linear-gradient(to right, rgb(205 231 38 / 12%), #f5b800);
+    border-radius: .3rem;
+    
+}
+.bread-crumb-menu{
+  margin-top: 100px !important;  
+}

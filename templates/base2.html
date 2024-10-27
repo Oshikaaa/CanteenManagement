@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static "assets/images/Canteen.png" %}" rel="icon">
+    <title>Canteen360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "assets/index/css/animate.css" %}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static "assets/index/css/fontawesome-all-min.css" %}">
+    <link rel="stylesheet" href="{% static "assets/index/css/bootstrap.min.css" %}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static "assets/index/css/animate.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "assets/index/css/style.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "assets/index/css/media-query.css" %}">
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="{% static 'assets/css/menu.css' %}">
+    <!-- Bootstrap CSS (optional) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+
+</head>
+
+<body data-spy="scroll" data-target="#myHeader">
+
+<!-- Preloader -->
+
+{% comment %} <div class="preloader">
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 35.235 35.235" xml:space="preserve">
+        <g>
+            <g id="b103_soup">
+                <path id="cap" d="M26.776,12.687H19.25c0.68,0,1.233-0.553,1.233-1.234s-0.554-1.23-1.233-1.23h-3.078c-0.68,0-1.232,0.549-1.232,1.23
+                    s0.553,1.234,1.232,1.234H8.645c-2.094,0-3.828,1.877-4.165,3.875h26.464C30.605,14.563,28.871,12.687,26.776,12.687z"></path>
+                <path id="body" d="M31.005,18.677v-0.352H4.479H4.417H0v1.762h4.417v10.918c0,2.338,1.894,4.229,4.228,4.229h18.132
+                c2.336,0,4.229-1.891,4.229-4.229V20.439h4.229v-1.762H31.005z"></path>
+                <path class="smell" id="elem-1" d="M11.24,4.235c0.123,0.162,0.254,0.318,0.391,0.465l0.341,0.342c0.216,0.217,0.417,0.434,0.577,0.629
+                    c0.08,0.098,0.146,0.191,0.195,0.268c0.047,0.076,0.09,0.135,0.1,0.223c0.012,0.094-0.037,0.221-0.133,0.348
+                    c-0.096,0.125-0.23,0.246-0.387,0.367c0.186,0.072,0.389,0.096,0.605,0.07c0.215-0.025,0.451-0.121,0.648-0.326
+                    c0.195-0.205,0.304-0.508,0.321-0.775c0.019-0.27-0.022-0.514-0.083-0.734c-0.123-0.438-0.327-0.793-0.545-1.119
+                    c-0.109-0.16-0.244-0.322-0.34-0.447c-0.096-0.113-0.185-0.229-0.266-0.344c-0.33-0.459-0.561-0.873-0.647-1.359
+                    c-0.09-0.492,0.01-1.121,0.307-1.842c-0.771,0.162-1.457,0.807-1.681,1.709c-0.111,0.445-0.087,0.934,0.032,1.363
+                    C10.793,3.511,11.002,3.897,11.24,4.235z"></path>
+                <path class="smell" id="elem-2" d="M15.809,4.235C15.932,4.397,16.064,4.553,16.2,4.7l0.34,0.342c0.216,0.217,0.416,0.434,0.58,0.629
+                    c0.077,0.098,0.143,0.191,0.193,0.268c0.049,0.076,0.09,0.135,0.098,0.223c0.013,0.094-0.035,0.221-0.131,0.348
+                    c-0.095,0.125-0.23,0.246-0.389,0.367c0.188,0.072,0.392,0.096,0.607,0.07c0.214-0.025,0.453-0.121,0.648-0.326
+                    c0.197-0.205,0.304-0.508,0.322-0.775c0.019-0.27-0.021-0.514-0.082-0.734c-0.125-0.438-0.33-0.793-0.548-1.119
+                    c-0.107-0.16-0.243-0.322-0.339-0.447c-0.094-0.113-0.185-0.229-0.264-0.344c-0.331-0.459-0.563-0.873-0.649-1.359
+                    c-0.09-0.49,0.008-1.119,0.304-1.84c-0.77,0.162-1.455,0.807-1.678,1.709c-0.111,0.445-0.088,0.934,0.031,1.363
+                    C15.363,3.511,15.568,3.897,15.809,4.235z"></path>
+                <path class="smell" id="elem-3" d="M19.972,4.235c0.122,0.162,0.253,0.318,0.39,0.465l0.341,0.342c0.216,0.217,0.415,0.434,0.577,0.629
+                    c0.08,0.098,0.146,0.191,0.195,0.268c0.047,0.076,0.088,0.135,0.1,0.223c0.013,0.094-0.037,0.221-0.133,0.348
+                    c-0.095,0.125-0.23,0.246-0.389,0.367c0.188,0.072,0.392,0.096,0.605,0.07c0.215-0.025,0.453-0.121,0.65-0.326
+                    c0.195-0.205,0.303-0.508,0.32-0.775c0.02-0.27-0.021-0.514-0.082-0.734c-0.123-0.438-0.326-0.793-0.545-1.119
+                    c-0.109-0.16-0.244-0.322-0.34-0.447c-0.096-0.113-0.186-0.229-0.266-0.344c-0.33-0.459-0.561-0.873-0.646-1.359
+                    c-0.091-0.492,0.009-1.121,0.304-1.842c-0.77,0.162-1.457,0.807-1.679,1.709c-0.11,0.445-0.087,0.934,0.032,1.363
+                    C19.524,3.511,19.731,3.897,19.972,4.235z"></path>
+            </g>
+            <g id="Capa_1_128_"></g>
+        </g>
+    </svg>
+</div> {% endcomment %}
+
+
+
+<!-- Page Wrapper -->
+<div id="wrap">
+    <!-- Start Header -->
+    <header class="header" id="myHeader">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="logo">
+                        <a href="{% url 'index' %}">
+                            <img src="{% static "assets/images/Canteen.png" %}" class="img-fluid" alt="The Canteen360 Logo Image" height=60 width=100>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-8 col-lg-10">
+                    <!-- Nav -->
+                    <nav class="navbar navbar-expand-lg nabar-own p-0">
+                        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation"> 
+                            <span class="navbar-toggler-icon">
+                            <span class="menu_line_1"></span>
+                            <span class="menu_line_2"></span>
+                            <span class="menu_line_3"></span>
+                            </span>
+                        </button>
+                        <div class="collapse navbar-collapse tr-nabar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto align-self-center">
+                                <li class="nav-item tr-nav-item"><a class="nav-link" href="{% url "index" %}">Home</a>
+                                </li>
+                                <li class="nav-item tr-nav-item"><a class="nav-link" href="{% url "menu" %}">Menu</a>
+                                </li>
+                                <li class="nav-item tr-nav-item"><a class="nav-link" href="#About">About</a>
+                                </li>
+                                <li class="nav-item tr-nav-item"><a class="nav-link" href="#Contact">Contact</a>
+                                </li>
+                            </ul>
+                        <div class="header-search">
+                            <input type="text" class="form-control header-input" placeholder="Search" ><span class="search-icon"><i class="fas fa-search"></i></span><span class='close-icon'><i class='fas fa-times'></i></span>
+                        </div>
+                        <div class="pl-4">
+                            <a href="{% url "login" %}" class="btn btn-primary rounded-pill">Login</a>
+                         </div>
+                    </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Header -->
+    {% block content %}{% endblock content %}
+</div>
+
+
+<!-- Page Wrapper -->
+    <footer class="position-relative wow fadeIn" data-wow-duration="2s" data-wow-delay=".4s">
+      <div class="footer-bottom">
+          <div class="container position-relative">
+              <div class="row">
+                  <div class="col-12 col-md-12 col-lg-12">
+                      <div class="footer-menu text-center">
+                          <ul>
+                              <li class="nav-item"><a class="nav-link" href="#">Home</a>
+                              </li>
+                              <li class="nav-item"><a class="nav-link" href="#">About</a>
+                              </li>
+                              <li class="nav-item"><a class="nav-link" href="#">Story</a>
+                              </li>
+                              <li class="nav-item"><a class="nav-link" href="#">Booking</a>
+                              </li>
+                              <li class="nav-item"><a class="nav-link" href="#">Reviews</a>
+                              </li>
+                              <li class="nav-item"><a class="nav-link" href="#">TopFoods</a>
+                              </li>
+                          </ul>
+                      </div>
+                   </div>
+              </div>
+              <div class="row">
+                  <div class="col-12 col-md-12 col-lg-12 text-center">
+                      <div class="footer-logo">
+                          <img href="{% url 'index'  %}" src="{% static "assets/images/Canteen.png" %}" alt="the logo image | Footer cafe Logo" >
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12 footer-icon text-center">
+                    <a class="fb-ic">
+                      <i class="fab fa-facebook-f wow fadeInDown mr-md-5 mr-2" data-wow-duration="1.5s" data-wow-delay=".4s"> </i>
+                    </a>
+                    <a class="tw-ic">
+                      <i class="fab fa-twitter wow fadeInUp mr-md-5 mr-2" data-wow-duration="1.5s" data-wow-delay=".4s"> </i>
+                    </a>
+                    <a class="ins-ic">
+                      <i class="fab fa-instagram wow fadeInDown mr-md-5 mr-2" data-wow-duration="1.5s" data-wow-delay=".4s"> </i>
+                    </a>
+                    <a class="pin-ic">
+                      <i class="fab fa-pinterest wow fadeInUp mr-md-5 mr-2" data-wow-duration="1.5s" data-wow-delay=".4s"> </i>
+                    </a>
+                    <a class="sn-ic">
+                      <i class="fab fa-snapchat wow fadeInDown mr-md-5 mr-2" data-wow-duration="1.5s" data-wow-delay=".4s"> </i>
+                    </a>
+                  </div>
+              </div>
+  
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="footer-copylink text-center"><span><i class="fas fa-copyright"></i> All Rights Reserved by Canteen360 
+                      </div>
+                  </div>  
+              </div>
+          </div>
+      </div>
+  </footer>
+  <!--end footer-->
+  
+  <span class="scroll-top" data-scroll="up">
+      <i class="fas fa-long-arrow-alt-up"></i>
+  </span>            
+  
+  <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="fas fa-window-close" style=""></i>
+              </button>
+              <div class="modal-body"> 
+                  <!-- video tag  -->
+                  <video  controls width="727" height="600">
+                      <source src="{% static "assets/index/videos/productionID-4068787.mp4" %}" type="video/mp4">
+                  </video>   
+              </div>
+          </div>
+        </div>
+      </div>
+  <!-- End Modal -->
+  
+  <script src="{% static "assets/index/js/jquery-3.5.1.slim.min.js" %}"></script>
+  <script src="{% static "assets/index/js/bootstrap.bundle.min.js" %}"></script>
+  <script src="{% static "assets/index/js/wow.min.js" %}"></script>
+  <script src="{% static "assets/index/js/bx-slider/jquery.bxslider.js" %}"></script>
+  <script src="{% static "assets/index/js/bx-slider/jquery.easing.1.3.js" %}"></script>
+  <script src="{% static "assets/index/js/bx-slider/jquery.fitvids.js" %}"></script>
+  <script src="{% static "assets/index/js/style.js" %}"></script>
+  <script src="{% static "assets/index/js/ajax-jquery.min.js" %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+      new WOW().init();
+  </script>
+  </body>
+  
+  </html>
