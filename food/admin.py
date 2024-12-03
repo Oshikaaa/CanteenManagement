@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, FoodItem, Tax
+from .models import Category, FoodItem, Rating, Tax
 from .models import Cart
 from decimal import Decimal
 
@@ -20,3 +20,4 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Tax, TaxAdmin)
 admin.site.register(Category)
 admin.site.register(FoodItem )
+admin.site.register(Rating )

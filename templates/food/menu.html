@@ -4,27 +4,97 @@
 {% block content %}
 
 
-<div class="container" style="padding-top: 100px; padding-bottom : 50px ;">
-  <h4  style="margin-top : 100px ;">Food Menu <i class="fa fa-menu" aria-hidden="true"></i></h4>
+<div class="container" style="padding-top: 100px; padding-bottom: 50px;">
+  <h4 style="margin-top: 100px;">Food Menu <i class="fa fa-menu" aria-hidden="true"></i></h4>
   <br>
   <div class="row">
-    {% for food in food_items  %}
-      <div class="col-lg-4 col-md-4 col-sm-4">
-          <img src="{{ food.food_image.url}}" class="img-fluid"  style="width: 300px; height: 200px; object-fit: cover; border-radius: 15px;">
-          <h4>{{food.food_name}}</h4>
-          <h5><span>{{food.category}} </h5> 
-          <span class="fa fa-star checked"></span>
-          <span class="fa fa-star checked"></span>
-          <span class="fa fa-star checked"></span>
-          <span class="fa fa-star checked"></span>
-          <span class="fa fa-star"></span>
-          <p> {{food.description}}</p>
-          <p> <b> Nrs. {{food.total_cost}} </b></p>
-      </div>
-      {% endfor %}
+    {% for food in food_items %}
+<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+    <div class="food-card shadow-sm rounded">
+        <!-- Food Image -->
+        <img src="{{ food.food_image.url }}" class="img-fluid rounded-top" style="width: 100%; height: 200px; object-fit: cover;">
+        <div class="card-body">
+            <!-- Food Name -->
+            <h4 class="card-title">{{ food.food_name }}</h4>
+            <!-- Category -->
+            <h5 class="card-subtitle mb-2 text-muted">{{ food.category }}</h5>
+            <!-- Price -->
+            <p><b>Nrs. {{ food.total_cost }}</b></p>
+            <!-- Navigate to Cart -->
+            <a href="#" class="btn btn-primary d-block w-100 add_to_cart" data-id="{{ food.id }}" 
+            data-url="{% url 'add_to_cart' food.id %}" title="Go to Cart">
+                <i class="fas fa-shopping-cart"></i> CART
+            </a>
+        </div>
+    </div>
+</div>
+{% endfor %}
 
   </div>
-</div>
+</div><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+      // Add to Cart
+      $('.add_to_cart').click(function (e) {
+          e.preventDefault();
+          const url = $(this).data('url');
+          const itemId = $(this).data('id');
+
+          $.ajax({
+              type: 'POST',
+              url: url,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+              success: function (response) {
+                  if (response.status === 'Success') {
+                      $('#qty-' + itemId).text(response.qty); // Update quantity
+                      alert(response.message); // Success message
+                  } else if (response.status === 'login_required') {
+                      alert('Please login to continue.');
+                  } else {
+                      alert(response.message);
+                  }
+              },
+              error: function () {
+                  alert('An error occurred while adding to cart.');
+              }
+          });
+      });
+
+      // Decrease from Cart
+      $('.decrease_cart').click(function (e) {
+          e.preventDefault();
+          const url = $(this).data('url');
+          const itemId = $(this).data('id');
+
+          $.ajax({
+              type: 'POST',
+              url: url,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+              success: function (response) {
+                  if (response.status === 'Success') {
+                      $('#qty-' + itemId).text(response.qty); // Update quantity
+                      if (response.qty === 0) {
+                          alert('Item removed from cart.');
+                      } else {
+                          alert(response.message);
+                      }
+                  } else if (response.status === 'login_required') {
+                      alert('Please login to continue.');
+                  } else {
+                      alert(response.message);
+                  }
+              },
+              error: function () {
+                  alert('An error occurred while decreasing cart quantity.');
+              }
+          });
+      });
+  });
+</script>
 
 
 {% endblock content %}

@@ -29,6 +29,7 @@ class Order(models.Model):
 
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
     food_item = models.ForeignKey(FoodItem, on_delete=models.SET_NULL, blank=True, null=True)
+    quantity = models.IntegerField(null=True , blank=True)
 
     order_number = models.CharField(max_length=20)
 
@@ -43,8 +44,8 @@ class Order(models.Model):
     city = models.CharField(max_length=50)
 
     total = models.FloatField()
-    tax_data = models.JSONField(blank=True, help_text = "Data format: {'tax_type':{'tax_percentage':'tax_amount'}}")
-    total_tax = models.FloatField()
+    tax_data = models.JSONField(blank=True, help_text = "Data format: {'tax_type':{'tax_percentage':'tax_amount'}}" , null=True)
+    total_tax = models.FloatField(blank=True, null=True)
     total_data = models.JSONField(blank=True, null=True)
 
     payment_method = models.CharField(max_length=25)
@@ -95,26 +96,23 @@ class Order(models.Model):
         return context
 
     def __str__(self):
-      return f"Order {self.order_number} - Placed by: {self.user.userprofile.first_name} {self.user.userprofile.last_name}"
+      return f"Order {self.order_number} - Placed by: {self.user.first_name} "
 
  
-# class FoodOrder(models.Model):
-#     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-#     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-#     quantity = models.IntegerField()
-#     price = models.FloatField()
-#     amount = models.FloatField()
-    
-#     return_amount = models.FloatField(default=0)
-#     reservation_expiration = models.DateTimeField(null=True, blank=True)
+class FoodOrder(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.FloatField()
+    amount = models.FloatField()
   
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-#     def __str__(self):
-#         return self.food_item.food_name
+    def __str__(self):
+        return self.food_item.food_name
 
 
     

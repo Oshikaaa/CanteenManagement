@@ -77,8 +77,7 @@ def register(request):
 
 
 def login(request):
-    user = User.objects.all()
-    print("USER ->" , user )
+    
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
         return redirect('myAccount')

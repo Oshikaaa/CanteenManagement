@@ -1,0 +1,168 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<!-- Main Section Start -->
+
+<div class="container"style="padding-top:180px; padding-left: 20px; padding-right: 20px; padding-bottom: 20px;" >
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <div class="tabs-holder horizontal" style="padding: 15px;">
+                <ul class="stickynav-tabs nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-shopping-cart"></i>Review Your Billing Address</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="home" class="tab-pane in active">
+                        <div class="menu-itam-holder">
+                            <div id="menu-item-list-6272" class="menu-itam-list">
+                                <div class="billing-address" style="padding: 10px;">
+                                    <div><b>{{ order.first_name }} {{ order.last_name }}</b></div>
+                                    <div>{{ order.address }}</div>
+                                    <div>{{ order.city }} </div>
+                                    <div>{{ order.state }}, {{ order.country }}</div>
+                                    <div><b>Phone: </b>{{ order.phone }}</div>
+                                    <div><b>Email: </b>{{ order.email }}</div>
+                                    <div><b>Payment: </b>{{ order.payment_method }}</div>
+                                    <br>
+                                    <div><a href="{% url 'checkout' %}" class="btn btn-outline-warning" 
+                                        style="padding: 0.3rem 1rem; font-size: 0.875rem;">Edit</a></div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Your order section -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="tabs-holder horizontal" style="padding: 15px;">
+                <ul class="stickynav-tabs nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home"><i class="icon- icon-room_service"></i>Your Order</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="home" class="tab-pane in active">
+                        <div class="menu-itam-holder">
+                            <div style="padding: 10px;">
+                                <table class="table">
+                                    <tbody>
+                                        {% for item in cart_items %}
+                                        <tr>
+                                            <td><img src="{{ item.food_item.food_image.url }}" width="40" alt="food"></td>
+                                            <td><b>{{ item.food_item.food_name }}</b></td>
+                                            <td>{{ item.quantity }}</td>
+                                            <td style="right-padding:0;"> रु‎{{ item.food_item.total_cost }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                <ul>
+                                    <li style="list-style-type: none;">
+                                        Subtotal
+                                        <span class="price float-right">
+                                            <span class="currency">रु‎</span>
+                                            <span id="subtotal">{{ subtotal }}</span>
+                                        </span>
+                                    </li>
+
+                                    {% for key, value in tax_dict.items %}
+                                        {% for i, j in value.items %}
+                                            <li style="list-style-type: none;">
+                                                {{ key }} <small>({{ i }}%)</small>
+                                                <span class="price float-right">
+                                                    <span class="currency">रु‎</span>
+                                                    <span id="tax-{{ key }}">{{ j }}</span>
+                                                </span>
+                                            </li>
+                                        {% endfor %}
+                                    {% endfor %}
+
+
+                                    <li style="list-style-type: none; font-weight: 600;">
+                                        TOTAL
+                                        <span class="price float-right">
+                                            <span class="currency">रु‎</span>
+                                            <span id="total">{{ grand_total }}</span>
+                                        </span>
+                                    </li>
+                                    <br>
+                                    <a href="{% url 'payments' %}">
+                                        <button class="theme-btn-1" style="width: 360px; height: 50px; background-color: purple; color: white;">Pay</button>
+                                    </a>
+                                    <div class="pt-2" style="display: flex; align-items: center;">
+                                        <img src="{% static 'assets/images/khalti.png' %}" alt="Khalti" width="100">
+                                        <span style="margin-left: 10px;">Powered by Khalti</span>
+                                    </div>
+                                    {% if form.errors %}
+                                    <div class="errorlist">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% for error in field.errors %}
+                                                    <li>{{ error }}</li>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<!-- Main Section End -->
+ <script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+    
+        var grand_total = "{{ grand_total }}"
+        var url = "{% url 'payments' %}"
+        var order_number = "{{ order.order_number }}"
+        const csrftoken = getCookie('csrftoken');
+        
+        console.log('csrftoken===>', csrftoken)
+       
+    
+       
+
+     // Send the data to payments view to store in the database
+     function sendTransaction(transaction_id, payment_method, status){
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                'order_number': order_number,
+                'transaction_id': transaction_id,
+                'payment_method': payment_method,
+                'status': status,
+                'csrfmiddlewaretoken': csrftoken
+            },
+            success: function(response){
+                console.log('response==>', response)
+                window.location.href = order_complete +'?order_no='+response.order_number+'&trans_id='+response.transaction_id
+            }
+        })
+    }
+</script> 
+{% endblock content %}

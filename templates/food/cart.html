@@ -1,0 +1,88 @@
+{% extends "base2.html" %}
+{% block content %}
+{% load static %}
+
+<!-- SHOPPING CART AREA START -->
+<div class="liton__shoping-cart-area mb-120 mt-120" style="padding-top: 180px;">  <!-- Added padding-top -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping-cart-inner">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if cart_items %}
+                                    {% for cart_item in cart_items %}
+                                        <tr>
+                                            <td class="cart-product-image">
+                                                <img src="{{ cart_item.food_item.food_image.url }}" alt="{{ cart_item.food_item.food_name }}" height="48" width="54">
+                                            </td>
+                                            <td>{{ cart_item.food_item.food_name }}</td>
+                                            <td>Nrs. {{ cart_item.food_item.total_cost|floatformat:2 }}</td>
+                                            <td>{{ cart_item.quantity }}</td>
+                                            <td class="text-danger">
+                                                <a href="#" class="delete_cart" data-id="{{ cart_item.id }}" data-url="{% url 'delete_cart' cart_item.id %}">
+                                                    <i class="fas fa-trash"></i> Remove
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">
+                                            <p>No items in your cart.</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="shoping-cart-total mt-50 mb-5">
+                        <h4>Cart Totals</h4>
+                        <table class="table">
+                            <tbody>
+                                <!-- Assuming tax_dict is available, update according to your tax model -->
+                                {% for key, value in tax_dict.items %}
+                                    {% for i, j in value.items %}
+                                        <tr>
+                                            <td>{{ key }} <small>({{ i }}%)</small></td>
+                                            <td>
+                                                <span class="price ">
+                                                    <span class="currency">Nrs. </span>
+                                                    <span id="tax-{{ key }}">{{ j }}</span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                                <tr>
+                                    <td>Cart Subtotal</td>
+                                    <td><span id="subtotal">Nrs. {{ subtotal }}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Order Total</strong></td>
+                                    <td><strong>Nrs. <span id="total">{{ grand_total }}</span></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-wrapper text-right">
+                            <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SHOPPING CART AREA END -->
+
+{% endblock %}

@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseForbidden
 from django.db.models import Count 
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Category(models.Model):
@@ -50,7 +50,7 @@ class FoodItem(models.Model):
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
     
 
-    food_image = models.ImageField(upload_to='media/image/', default='', blank=True)
+    food_image = models.ImageField(upload_to='image/', default='', blank=True)
 
     is_available = models.BooleanField(default=True)
     is_soldout=models.BooleanField(default=False)
@@ -76,7 +76,7 @@ class FoodItem(models.Model):
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -99,3 +99,26 @@ class Tax(models.Model):
     def __str__(self):
         return self.tax_type
 
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # User who gives the rating
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)  # Food item being rated
+    rating = models.DecimalField(
+        max_digits=3,
+        decimal_places=1,
+        validators=[
+            MinValueValidator(1.0),  # Minimum rating is 1.0
+            MaxValueValidator(5.0)  # Maximum rating is 5.0
+        ]
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp for when the rating is created
+    updated_at = models.DateTimeField(auto_now=True)  # Timestamp for updates to the rating
+
+    class Meta:
+        verbose_name = 'Rating'
+        verbose_name_plural = 'Ratings'
+        unique_together = ('user', 'food_item')  
+    def __str__(self):
+        return f"{self.user} - {self.food_item} - {self.rating}"

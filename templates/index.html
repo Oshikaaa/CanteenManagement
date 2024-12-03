@@ -91,7 +91,7 @@
                             <ul class="navbar-nav mr-auto align-self-center">
                                 <li class="nav-item tr-nav-item"><a class="nav-link" href="{% url "index" %}">Home</a>
                                 </li>
-                                <li class="nav-item tr-nav-item"><a class="nav-link" href="#Packages">Menu</a>
+                                <li class="nav-item tr-nav-item"><a class="nav-link" href="{% url "menu" %}">Menu</a>
                                 </li>
                                 <li class="nav-item tr-nav-item"><a class="nav-link" href="#About">About</a>
                                 </li>
@@ -101,9 +101,24 @@
                         <div class="header-search">
                             <input type="text" class="form-control header-input" placeholder="Search" ><span class="search-icon"><i class="fas fa-search"></i></span><span class='close-icon'><i class='fas fa-times'></i></span>
                         </div>
-                        <div class="pl-4">
-                            <a href="{% url "login" %}" class="btn btn-primary rounded-pill">Login</a>
-                         </div>
+                     
+                      
+                       <div class="pl-4">
+                        
+                        {% if user.is_authenticated %}
+                        <a class="btn btn-success rounded-pill" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                        <a class="btn btn-success rounded-pill" href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                         </div> 
+                       <!-- Cart Icon -->
+                       <a href="{% url "cart" %}" title="Shopping Cart" style="margin-left: 10px;">
+                        <span class="utilize-btn-icon">
+                            <i class="fas fa-shopping-cart" ></i>
+                            <span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom: 10px; left: -5px;">{{ cart_count }}</span>
+                        </span>
+                    </a>
+
                     </div>
                     </nav>
                 </div>
@@ -123,7 +138,7 @@
                     <div class="slider-content">
                         <span class="wow fadeInDown" data-wow-duration="1s" data-wow-delay=".3s">Tasty & Healthy</span>
                         <h1 class="wow fadeInDown" data-wow-duration="1.5s" data-wow-delay=".4s">Food Made With Love!</h1>
-                        <p class="mb-0 wow fadeInDown"  data-wow-duration="2s" data-wow-delay=".5s">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p class="mb-0 wow fadeInDown"  data-wow-duration="2s" data-wow-delay=".5s">Designed to enhance convenience and efficiency, the system allows students to order their meals in advance, reducing waiting times and helping the canteen staff manage high demand smoothly. With options to personalize orders and schedule them, students can enjoy freshly prepared food that meets their preferences and dietary needs. </p>
                     </div>
     
                 </div>
@@ -147,7 +162,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Delicious Pizza</h5>
                         <p class="card-text">A classic Italian pizza with fresh mozzarella, tomatoes, and basil.</p>
-                        <p class="card-text"><strong>Price: $12.99</strong></p>
+                        <p class="card-text"><strong>Price: Rs. 500</strong></p>
                     </div>
                 </div>
             </div>
@@ -157,7 +172,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Juicy Burger</h5>
                         <p class="card-text">A mouthwatering burger with fresh lettuce, tomatoes, and cheese.</p>
-                        <p class="card-text"><strong>Price: $9.99</strong></p>
+                        <p class="card-text"><strong>Price: Rs. 150</strong></p>
                     </div>
                 </div>
             </div>
@@ -167,7 +182,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Creamy Pasta</h5>
                         <p class="card-text">Rich and creamy Alfredo pasta with fresh herbs and parmesan.</p>
-                        <p class="card-text"><strong>Price: $11.49</strong></p>
+                        <p class="card-text"><strong>Price: Rs. 250</strong></p>
                     </div>
                 </div>
             </div>
@@ -233,7 +248,7 @@
                     <div class="wow fadeInDown" data-wow-duration="2s" data-wow-delay=".4s">
                         <h2 class="mb-0">Our Specialities</h2>
                     </div>
-                     <p class="wow fadeIn" data-wow-duration="2s" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+                     <p class="wow fadeIn" data-wow-duration="2s" data-wow-delay=".4s">We focus on offering a variety of balanced, nutrient-dense meals that cater to all dietary needs, helping students fuel their learning.</p>
                 </div>
             </div>
             <div class="row specialities-section">
@@ -277,8 +292,8 @@
                 <div class="col-12 col-lg-1 d-lg-block d-none p-0"></div>
                 <div class="col-12 col-md-6 col-lg-6 p-lg-0 specialities-column">
                     <div class="wow fadeInRight" data-wow-duration="2s" data-wow-delay=".4s">
-                        <h3 class="mb-0"> Super fast home delivery<br>
-                            service</h3>                        
+                        <h3 class="mb-0"> Food that satisfies your taste<br>
+                        and service</h3>                        
                     </div>
                     <p class="wow fadeIn mb-0" data-wow-duration="2s" data-wow-delay=".4s">
                         Slightly believable here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in top some form, by injected humour, or randomised words which is to don't look even.</p>
@@ -317,7 +332,7 @@
                                  <div class="our-item">
                                     <div class="our-item-inner">
                                         <div class="wow fadeInRight" data-wow-duration="2s" data-wow-delay=".4s">
-                                            <h3 class="mb-0"> Bread buuter with zam<br>
+                                            <h3 class="mb-0"> Bread butter with jam<br>
                                                         and milk shake</h3>    
                                         </div>
                                         <div class="item_order">

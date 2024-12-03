@@ -1,0 +1,398 @@
+{% extends 'base2.html' %}
+{% block content %}
+{% load static %}
+<style>
+  /* General Styles for Checkout Page */
+  .ltn__checkout-area {
+      padding-top: 180px;
+      background-color: #f7f7f7;
+  }
+  
+  .ltn__checkout-inner {
+      background-color: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ltn__checkout-single-content {
+      margin-top: 50px;
+      margin-bottom: 30px;
+  }
+  
+  .ltn__checkout-single-content h4 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+  }
+  
+  .ltn__checkout-single-content h6 {
+      font-size: 18px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 10px;
+  }
+  
+  .ltn__checkout-single-content-info {
+      background-color: #fafafa;
+      border-radius: 8px;
+      padding: 20px;
+  }
+  
+  /* Form Field Styling */
+  .form-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 8px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+      border-color: #007bff;
+      outline: none;
+  }
+  
+  /* Table Styling for Products and Cart Totals */
+  .table {
+      width: 100%;
+      margin-bottom: 30px;
+  }
+  
+  .table-bordered {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+  }
+  
+  .table-bordered th,
+  .table-bordered td {
+      padding: 15px;
+      vertical-align: middle;
+      text-align: center;
+  }
+  
+  .cart-product-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain; 
+}
+  
+  .cart-product-info h5 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+  }
+  
+  .cart-product-quantity {
+      font-size: 14px;
+      color: #555;
+  }
+  
+  /* Payment Method Section */
+  .ltn__checkout-payment-method {
+      background-color: #fafafa;
+      padding: 20px;
+      border-radius: 8px;
+  }
+  
+  .ltn__checkout-payment-method h4 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+  }
+  
+  .form-check {
+      margin-bottom: 20px;
+  }
+  
+  .form-check-label img {
+      max-width: 120px;
+  }
+  
+  .ltn__payment-note {
+      font-size: 14px;
+      color: #777;
+      margin-top: 20px;
+  }
+  
+  .btn-primary {
+      background-color: #007bff;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      text-transform: uppercase;
+  }
+  
+  .btn-primary:hover {
+      background-color: #0056b3;
+  }
+  
+  .text-danger {
+      font-size: 14px;
+      color: #d9534f;
+  }
+  
+  /* Cart Totals Section */
+  .shoping-cart-total {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shoping-cart-total h4 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+  }
+  
+  .shoping-cart-total table {
+      width: 100%;
+      margin-bottom: 20px;
+  }
+  
+  .shoping-cart-total td {
+      font-size: 16px;
+      color: #333;
+  }
+  
+  .shoping-cart-total td strong {
+      font-weight: 700;
+      font-size: 18px;
+      color: #333;
+  }
+  
+  .currency {
+      font-size: 16px;
+      font-weight: 500;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 991px) {
+      .ltn__checkout-area {
+          padding-top: 120px;
+      }
+  
+      .ltn__checkout-single-content-info {
+          padding: 15px;
+      }
+  
+      .form-group {
+          margin-bottom: 15px;
+      }
+  
+      .ltn__checkout-payment-method {
+          padding: 15px;
+      }
+  
+      .btn-primary {
+          width: 100%;
+      }
+  
+      .shoping-cart-total {
+          margin-top: 20px;
+      }
+  }
+  
+  @media (max-width: 576px) {
+      .ltn__checkout-area {
+          padding-top: 80px;
+      }
+  
+      .ltn__checkout-inner {
+          padding: 20px;
+      }
+  
+      .shoping-cart-total {
+          margin-top: 20px;
+      }
+  }
+  
+
+
+</style>
+<!-- WISHLIST AREA START -->
+<div class="ltn__checkout-area mb-105 mt-40" style="padding-top:180px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__checkout-inner">
+                    <!-- Billing Details Section -->
+                    <div class="ltn__checkout-single-content mt-50">
+                        <h4 class="title-2">Billing Details</h4>
+                        <div class="ltn__checkout-single-content-info">
+                          <form id="checkout-form" action="{% url 'place_order' %}" method="POST">
+                            {% csrf_token %}
+                            <!-- Billing Details -->
+                            <h6>Personal Information</h6>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="first_name">First Name</label>
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="last_name">Last Name</label>
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="phone">Phone Number</label>
+                                    {{ form.phone }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email">Email Address</label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="address">Address</label>
+                                    {{ form.address }}
+                                </div>
+                            </div>
+                        
+                
+                        
+                        </div>
+                    </div>
+
+                    <!-- Products Section -->
+                    <div class="ltn__checkout-single-content mt-50">
+                        <h4 class="title-2">Products</h4>
+                        <div class="ltn__checkout-single-content-info">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    {% for cart_item in cart_items %}
+                                    <tr id="cart-item-{{ cart_item.id }}">
+                                        <td class="cart-product-image">
+                                            <a href="product-details.html"><img src="{{ cart_item.food_item.food_image.url }}" alt="FOOD" height="80" width="40"></a>
+                                        </td>
+                                        <td class="cart-product-info">
+                                            <h5><a href="product-details.html">{{ cart_item.food_item.food_name }}</a></h5>
+                                        </td>
+                                        <td class="cart-product-quantity">
+                                            <label id="qty-{{ cart_item.project.id }}">{{ cart_item.quantity }}</label>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method Section -->
+            <div class="col-lg-6">
+                <div class="ltn__checkout-payment-method mt-50">
+                    <h4 class="title-2">Payment Method</h4>
+                    <div id="checkout_accordion_1">
+                        <div class="form-check">
+                            <input type="radio" name="payment_method" value="Khalti" id="khalti" class="form-check-input">
+                            <label class="form-check-label" for="Khalti">
+                                <img src="{% static 'assets/images/khalti.png' %}" alt="khalti" width="100">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="ltn__payment-note mt-30 mb-30">
+                        <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
+                    </div>
+                    <span class="text-danger" id="payment-method-error"></span><br>
+                    <button onclick="return payMethodConfirm();" type="button" class="btn btn-primary text-uppercase">Place order</button>
+                  </form>
+                </div>
+            </div>
+
+
+
+            <!-- Cart Totals Section -->
+            <div class="col-lg-6">
+                <div class="shoping-cart-total mt-50">
+                    <h4 class="title-2">Cart Totals</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            {% for key, value in tax_dict.items %}
+                                {% for i, j in value.items %}
+                                <tr>
+                                    <td>{{ key }} <small>({{ i }}%)</small></td>
+                                    <td><span class="currency">रु‎</span> <span id="tax-{{ key }}">{{ j }}</span></td>
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+
+                            {% for cart_item in cart_items %}
+                            <tr>
+                                <td>Quantity</td>
+                                <td><span id="quantity-{{ cart_item.project.id }}">{{ cart_item.quantity }}</span></td>
+                            </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <td>Cart Subtotal</td>
+                                <td><span id="subtotal">रु‎ {{ subtotal }}</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Order Total</strong></td>
+                                <td><strong>रु‎ <span id="total">{{ grand_total }}</span></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function payMethodConfirm(){
+      var payMethod = $("input[name='payment_method']:checked").val();
+      if(!payMethod){
+          $('#payment-method-error').html("Select Payment Method!");
+          return false;
+      } else {
+          Swal.fire({
+              title: 'Confirm Payment Method',
+              text: 'You have selected ' + payMethod + ' as your preferred payment method.',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'OK',
+              cancelButtonText: 'Cancel'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Trigger form submission
+                  $('#checkout-form').submit();
+              } else {
+                  // User canceled the confirmation
+                  return false;
+              }
+          });
+          return false; // Prevent form submission until user confirms
+      }
+  }
+  
+  $('input[name=payment_method]').on('change', function(){
+      $('#payment-method-error').html("");
+  });
+</script>
+{% endblock content %}
