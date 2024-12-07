@@ -122,6 +122,13 @@
                                         <span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom: 10px; left: -5px;">{{ cart_count }}</span>
                                     </span>
                                 </a>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'myAccount' %}" title="Dashboard" style="margin-left: 10px;">
+                                        <span class="utilize-btn-icon">
+                                            <i class="fas fa-user-circle"></i>
+                                        </span>
+                                    </a>
+                                {% endif %}
                             </div>
                             
                            

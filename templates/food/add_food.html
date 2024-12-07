@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-9">
+        <div class="card">
+            {% include 'includes/alerts.html' %}
+            <div class="card-body">
+                <div class="p-3">
+                    <h1 class="text-uppercase" style="text-align:center;">Add your product.</h1><b>
+                    <hr>
+                    <button class="btn btn-primary btn-rounded waves-effect waves-light" onclick="history.back()">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i> Back
+                    </button>
+                    <br><br>
+                    <form action="{% url 'add_food' %}" method="POST" enctype="multipart/form-data" style="margin-bottom:50px;">
+                        {% csrf_token %}
+                        <div class="form-fields-set">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="field-holder">
+                                        <label>Food Name *</label>
+                                        {{ form.food_name }}
+                                        {{ form.food_name.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="field-holder">
+                                        <label>Category *</label><br>
+                                        {{ form.category }}
+                                        {{ form.category.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="field-holder">
+                                        <label>Description</label>
+                                        {{ form.description }}
+                                        {{ form.description.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="field-holder">
+                                        <label>Price</label>
+                                        {{ form.total_cost }}
+                                        {{ form.total_cost.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="field-holder">
+                                        <label>Image</label>
+                                        {{ form.food_image }}
+                                        {{ form.food_image.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="field-holder">
+                                        <div class="form-check form-check-inline p-2">
+                                            <label class="form-check-label" for="{{ form.is_available.id_for_label }}">Is Available</label>
+                                            <div class="pl-3">
+                                                {{ form.is_available }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="field-holder">
+                                        <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light" style="margin-top:20px;">
+                                            <i class="fa fa-check" aria-hidden="true"></i> Create
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
