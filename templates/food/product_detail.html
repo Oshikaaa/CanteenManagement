@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <!-- Product Details -->
+    <div class="product-detail">
+        <h1>{{ food_item.food_name }}</h1>
+        <img src="{{ food_item.food_image.url }}" alt="{{ food_item.food_name }}" class="img-fluid">
+        <p><strong>Category:</strong> {{ food_item.category.category_name }}</p>
+        <p><strong>Description:</strong> {{ food_item.description }}</p>
+        <p><strong>Price:</strong> ${{ food_item.total_cost }}</p>
+        <p>
+            <strong>Availability:</strong> 
+            {% if food_item.is_available %}
+                <span class="text-success">Available</span>
+            {% else %}
+                <span class="text-danger">Out of Stock</span>
+            {% endif %}
+        </p>
+        <form method="POST" action="{% url 'add_to_cart' food_item.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </form>
+    </div>
+
+    <!-- Related Products -->
+    <div class="related-products mt-5">
+        <h3>Related Items</h3>
+        <div class="row">
+            {% for item in related_food_items %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ item.food_image.url }}" class="card-img-top" alt="{{ item.food_name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.food_name }}</h5>
+                        <p class="card-text">${{ item.total_cost }}</p>
+                        <a href="{% url 'product_detail' item.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Popular Products -->
+    <div class="popular-products mt-5">
+        <h3>Popular Items</h3>
+        <div class="row">
+            {% for item in popular_food_items %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ item.food_image.url }}" class="card-img-top" alt="{{ item.food_name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.food_name }}</h5>
+                        <p class="card-text">${{ item.total_cost }}</p>
+                        <a href="{% url 'product_detail' item.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

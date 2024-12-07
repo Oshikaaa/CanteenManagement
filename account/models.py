@@ -9,26 +9,25 @@ from django.db.models.fields.related import ForeignKey, OneToOneField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, password=None, **extra_fields):
+    def create_user(self, email, username, password=None,  role=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username, **extra_fields)
-        user.set_password(password)
+        user = self.model(email=email, username=username , role=role )
+        user.set_password(password)  # Hash the password before saving
         user.save(using=self._db)
         return user
-    
-    
+
     def create_superuser(self, first_name, last_name, username, email, password=None):
         user = self.create_user(
-            email = self.normalize_email(email),
-            username = username,
-            password = password,
-            first_name = first_name,
-            last_name = last_name,
+            email=self.normalize_email(email),
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            role=User.ADMIN  # Superuser should have an Admin role
         )
         user.is_admin = True
         user.is_active = True
@@ -65,7 +64,6 @@ class User(AbstractBaseUser):
     is_superadmin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     objects = UserManager()
 

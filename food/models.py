@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseForbidden
 from django.db.models import Count 
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.text import slugify
 
 
 class Category(models.Model):
@@ -46,6 +47,7 @@ class FoodItem(models.Model):
     food_name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField(max_length=2000)
+    slug = models.SlugField(max_length=100, unique=True , null=True , blank=True)
     
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
     
@@ -67,7 +69,15 @@ class FoodItem(models.Model):
         return self.food_name
     
     def save(self, *args, **kwargs):
-        self.food_name = self.food_name.title()
+        self.food_name = self.food_name.title()  # Ensure the food name is capitalized
+
+        if not self.slug:
+            # Generate the slug if it's empty
+            self.slug = slugify(self.food_name)
+            # Ensure the slug is unique
+            if FoodItem.objects.filter(slug=self.slug).exists():
+                self.slug = f"{self.slug}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
+
         super(FoodItem, self).save(*args, **kwargs)
 
 

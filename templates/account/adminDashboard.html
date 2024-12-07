@@ -1,1 +1,125 @@
-{% extends 'base.html' %} {% block content %} {% load static %} {% endblock %}
+{% extends 'base.html' %} 
+{% block content %} 
+{% load static %} 
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- Load message -->
+        {% include 'includes/alerts.html' %}
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    
+                    <h5 class="card-title mb-0"><a href="">Total Orders</a>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            {{ orders_count }}
+                        </h2>
+                    </div>
+                   
+                </div>
+
+                
+            </div>
+           
+        </div><!-- end card-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">All Time</span>
+                    <h5 class="card-title mb-0"><a href="">Total Sale</a></h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                        </h2>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+           
+        </div><!-- end card-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">All Time</span>
+                    <h5 class="card-title mb-0">Most Sold Food</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                        </h2>
+                    </div>
+                    
+                </div>
+                <div class="progress shadow-sm" style="height: 5px;">
+                    <div class="progress-bar bg-success" role="progressbar"aria-valuemin="0" ></div>
+                </div>
+                
+            </div>
+           
+        </div>
+        <!--end card-->
+    </div> <!-- end col-->
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">Current</span>
+                    <h5 class="card-title mb-0">Most Sold Category</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                        </h2>
+                    </div>
+                    
+                </div>
+            </div>
+           
+        </div>
+        <!--end card-->
+    </div> <!-- end col-->
+</div>
+<!-- end row-->
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Upcoming Events
+            </div>
+            <div class="card-body">
+                <blockquote class="card-bodyquote">
+         
+                        <p class="card-text"><a href=""><b>{{ proj.project_title }}</b></a> matures on {{ proj.return_date }}</p>
+                  
+                        <p class="card-text">No upcoming events</p>
+                 
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+
+
+{% endblock %}
