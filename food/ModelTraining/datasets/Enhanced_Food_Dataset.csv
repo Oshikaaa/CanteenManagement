@@ -1,0 +1,101 @@
+Food_ID,Name,C_Type,Describe
+1,Chips,Snacks,Thinly sliced potatoes fried until crispy and salted.
+2,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+3,Chole Bhature,Breakfast,Spiced chickpea curry served with deep-fried bread.
+4,Samosa,Snacks,Deep-fried pastry filled with spiced potatoes and peas.
+5,Biryani,Lunch,Fragrant rice dish cooked with meat and aromatic spices.
+6,Toast,Breakfast,Crispy toasted bread often served with butter or eggs.
+7,Vegetable Pulao,Lunch,"Rice cooked with vegetables, spices, and herbs."
+8,Club Sandwich,Lunch,"Triple-layered sandwich with chicken, bacon, lettuce, and tomatoes."
+9,Spaghetti,Lunch,Italian pasta served with a savory tomato or meat sauce.
+10,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+11,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+12,Momos,Snacks,Steamed dumplings filled with spiced meat or vegetables.
+13,Idli Sambar,Breakfast,Steamed rice cakes served with a spiced lentil soup.
+14,Chole Bhature,Breakfast,Spiced chickpea curry served with deep-fried bread.
+15,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+16,Aloo Paratha,Breakfast,Stuffed Indian flatbread filled with spiced mashed potatoes.
+17,Burgers,Lunch,"Sandwich made with a meat or veggie patty, lettuce, and sauce."
+18,Nachos,Snacks,"Tortilla chips topped with cheese, beans, and salsa."
+19,Burgers,Lunch,"Sandwich made with a meat or veggie patty, lettuce, and sauce."
+20,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+21,Popcorn,Snacks,"Popped corn kernels, often salted or buttered."
+22,Aloo Paratha,Breakfast,Stuffed Indian flatbread filled with spiced mashed potatoes.
+23,Poha,Breakfast,"Flattened rice cooked with spices, peanuts, and vegetables."
+24,Idli Sambar,Breakfast,Steamed rice cakes served with a spiced lentil soup.
+25,Vegetable Pulao,Lunch,"Rice cooked with vegetables, spices, and herbs."
+26,Samosa,Snacks,Deep-fried pastry filled with spiced potatoes and peas.
+27,Spring Rolls,Snacks,Vegetables wrapped in thin dough and deep-fried.
+28,Poha,Breakfast,"Flattened rice cooked with spices, peanuts, and vegetables."
+29,Tacos,Snacks,"Mexican tortilla filled with meat, cheese, and vegetables."
+30,Popcorn,Snacks,"Popped corn kernels, often salted or buttered."
+31,Dal Bhat Tarkari,Lunch,"Nepali staple meal with lentils, rice, and vegetable curry."
+32,Fries,Snacks,"Deep-fried potato sticks, crispy and salted."
+33,Burgers,Lunch,"Sandwich made with a meat or veggie patty, lettuce, and sauce."
+34,Spaghetti,Lunch,Italian pasta served with a savory tomato or meat sauce.
+35,Egg Sandwich,Breakfast,Grilled sandwich with boiled eggs and seasoning.
+36,Vegetable Pulao,Lunch,"Rice cooked with vegetables, spices, and herbs."
+37,Toast,Breakfast,Crispy toasted bread often served with butter or eggs.
+38,Club Sandwich,Lunch,"Triple-layered sandwich with chicken, bacon, lettuce, and tomatoes."
+39,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+40,Poha,Breakfast,"Flattened rice cooked with spices, peanuts, and vegetables."
+41,Chicken Curry,Lunch,Spicy and flavorful chicken cooked in a rich gravy.
+42,Toast,Breakfast,Crispy toasted bread often served with butter or eggs.
+43,Egg Sandwich,Breakfast,Grilled sandwich with boiled eggs and seasoning.
+44,Scrambled Eggs,Breakfast,"Eggs cooked with butter, salt, and pepper until fluffy."
+45,Vegetable Pulao,Lunch,"Rice cooked with vegetables, spices, and herbs."
+46,Idli Sambar,Breakfast,Steamed rice cakes served with a spiced lentil soup.
+47,Club Sandwich,Lunch,"Triple-layered sandwich with chicken, bacon, lettuce, and tomatoes."
+48,Dal Bhat Tarkari,Lunch,"Nepali staple meal with lentils, rice, and vegetable curry."
+49,Spaghetti,Lunch,Italian pasta served with a savory tomato or meat sauce.
+50,Fries,Snacks,"Deep-fried potato sticks, crispy and salted."
+51,Vegetable Pulao,Lunch,"Rice cooked with vegetables, spices, and herbs."
+52,Momos,Snacks,Steamed dumplings filled with spiced meat or vegetables.
+53,Fish Fry,Lunch,Crispy fried fish seasoned with spices and herbs.
+54,Popcorn,Snacks,"Popped corn kernels, often salted or buttered."
+55,Chips,Snacks,Thinly sliced potatoes fried until crispy and salted.
+56,Fish Fry,Lunch,Crispy fried fish seasoned with spices and herbs.
+57,Aloo Paratha,Breakfast,Stuffed Indian flatbread filled with spiced mashed potatoes.
+58,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+59,Spaghetti,Lunch,Italian pasta served with a savory tomato or meat sauce.
+60,Burgers,Lunch,"Sandwich made with a meat or veggie patty, lettuce, and sauce."
+61,Burgers,Lunch,"Sandwich made with a meat or veggie patty, lettuce, and sauce."
+62,Fish Fry,Lunch,Crispy fried fish seasoned with spices and herbs.
+63,Fish Fry,Lunch,Crispy fried fish seasoned with spices and herbs.
+64,Spring Rolls,Snacks,Vegetables wrapped in thin dough and deep-fried.
+65,Dal Bhat Tarkari,Lunch,"Nepali staple meal with lentils, rice, and vegetable curry."
+66,Idli Sambar,Breakfast,Steamed rice cakes served with a spiced lentil soup.
+67,Tacos,Snacks,"Mexican tortilla filled with meat, cheese, and vegetables."
+68,Biryani,Lunch,Fragrant rice dish cooked with meat and aromatic spices.
+69,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+70,Idli Sambar,Breakfast,Steamed rice cakes served with a spiced lentil soup.
+71,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+72,Aloo Paratha,Breakfast,Stuffed Indian flatbread filled with spiced mashed potatoes.
+73,Chole Bhature,Breakfast,Spiced chickpea curry served with deep-fried bread.
+74,Fries,Snacks,"Deep-fried potato sticks, crispy and salted."
+75,Chips,Snacks,Thinly sliced potatoes fried until crispy and salted.
+76,Chicken Wings,Snacks,Chicken wings fried and coated in spicy sauce.
+77,Tandoori Chicken,Lunch,Chicken marinated in spiced yogurt and cooked in a tandoor.
+78,Upma,Breakfast,Savory South Indian dish made with semolina and vegetables.
+79,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+80,Samosa,Snacks,Deep-fried pastry filled with spiced potatoes and peas.
+81,Chicken Wings,Snacks,Chicken wings fried and coated in spicy sauce.
+82,Samosa,Snacks,Deep-fried pastry filled with spiced potatoes and peas.
+83,Momos,Snacks,Steamed dumplings filled with spiced meat or vegetables.
+84,Tacos,Snacks,"Mexican tortilla filled with meat, cheese, and vegetables."
+85,Fries,Snacks,"Deep-fried potato sticks, crispy and salted."
+86,Chiura Tarkari,Breakfast,Beaten rice served with spiced vegetable curry.
+87,Chole Bhature,Breakfast,Spiced chickpea curry served with deep-fried bread.
+88,Popcorn,Snacks,"Popped corn kernels, often salted or buttered."
+89,Chicken Curry,Lunch,Spicy and flavorful chicken cooked in a rich gravy.
+90,Scrambled Eggs,Breakfast,"Eggs cooked with butter, salt, and pepper until fluffy."
+91,Idli Sambar,Breakfast,Steamed rice cakes served with a spiced lentil soup.
+92,Poha,Breakfast,"Flattened rice cooked with spices, peanuts, and vegetables."
+93,Burgers,Lunch,"Sandwich made with a meat or veggie patty, lettuce, and sauce."
+94,Chicken Curry,Lunch,Spicy and flavorful chicken cooked in a rich gravy.
+95,Upma,Breakfast,Savory South Indian dish made with semolina and vegetables.
+96,Nachos,Snacks,"Tortilla chips topped with cheese, beans, and salsa."
+97,Pakora,Snacks,Vegetables coated in spiced batter and deep-fried until crispy.
+98,Spring Rolls,Snacks,Vegetables wrapped in thin dough and deep-fried.
+99,Upma,Breakfast,Savory South Indian dish made with semolina and vegetables.
+100,Momos,Snacks,Steamed dumplings filled with spiced meat or vegetables.
