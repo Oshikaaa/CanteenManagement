@@ -10,12 +10,18 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, password=None,  role=None):
+    def create_user(self, email, username, password=None, role=None, first_name=None, last_name=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username , role=role )
+        user = self.model(
+            email=email,
+            username=username,
+            role=role,
+            first_name=first_name,
+            last_name=last_name
+        )
         user.set_password(password)  # Hash the password before saving
         user.save(using=self._db)
         return user
@@ -35,6 +41,7 @@ class UserManager(BaseUserManager):
         user.is_superadmin = True
         user.save(using=self._db)
         return user
+
 
 
 class User(AbstractBaseUser):
