@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+from recommendation.views import recommend_view
 
 
 urlpatterns = [
@@ -14,6 +15,8 @@ urlpatterns = [
     path('product_builder/', views.product_builder, name='product_builder'),
     path('product_category/<int:pk>/', views.productItem_by_category, name='product_category'),
     path('product_detail/<int:id>/' , views.product_detail,name='product_detail'),
+
+    path('recommend/', recommend_view, name='recommend'),
 
 
     path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),

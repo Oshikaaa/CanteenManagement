@@ -1,0 +1,33 @@
+{% extends "base2.html" %}
+{% load static %}
+{% block content %}
+<div class="container" style="padding-top: 150px; padding-bottom: 50px;">
+    <h2>Recommended Food Items</h2><h1>User : {{user}}</h1>
+
+        {% if recommended_food %}
+        <div class="row">
+            {% for food in recommended_food %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    {% if food.food_image %}
+                    <img src="{{ food.food_image.url }}" class="card-img-top" alt="{{ food.food_name }}">
+                    {% else %}
+                    <img src="{% static "assets/images/default-image.jpg" %}" class="card-img-top" alt="{{ food.food_name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ food.food_name }}</h5>
+                        <p class="card-text">{{ food.Describe }}</p>
+                        <p><strong>Category:</strong> {{ food.category }}</p>
+                        <p><strong>Price:</strong> ${{ food.total_cost }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No recommendations available at the moment.</p>
+        {% endif %}
+    </div>
+    
+</div>
+{% endblock %}

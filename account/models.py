@@ -28,12 +28,12 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, first_name, last_name, username, email, password=None):
         user = self.create_user(
-            email=self.normalize_email(email),
+            email=email,
             username=username,
             password=password,
             first_name=first_name,
             last_name=last_name,
-            role=User.ADMIN  # Superuser should have an Admin role
+            role=User.ADMIN
         )
         user.is_admin = True
         user.is_active = True
@@ -67,10 +67,11 @@ class User(AbstractBaseUser):
 
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_superadmin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     objects = UserManager()
 

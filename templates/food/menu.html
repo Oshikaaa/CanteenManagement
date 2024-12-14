@@ -2,39 +2,78 @@
 {% load static %}
 
 {% block content %}
+<div class="container" style="padding-top: 150px; padding-bottom: 50px;">
+    <h4>Food Menu</h4>
 
+    <!-- Category Filter -->
+    <form method="get" action="{% url 'menu' %}">
+        <label for="category">Select Category:</label>
+        <select name="category" id="category" class="form-control" onchange="this.form.submit()">
+            <option value="">All</option>
+            {% for category in categories %}
+            <option value="{{ category.category_name }}" {% if selected_category == category.category_name %}selected{% endif %}>{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+    </form>
 
-<div class="container" style="padding-top: 100px; padding-bottom: 50px;">
-  <h4 style="margin-top: 100px;">Food Menu <i class="fa fa-menu" aria-hidden="true"></i></h4>
-  <br>
-  <div class="row">
-    {% for food in food_items %}
-<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-    <div class="food-card shadow-sm rounded">
-        <!-- Food Image -->
-        <img src="{{ food.food_image.url }}" class="img-fluid rounded-top" style="width: 100%; height: 200px; object-fit: cover;">
-        <div class="card-body">
-            <!-- Food Name -->
-            <h4 class="card-title">{{ food.food_name }}</h4>
-            <!-- Category -->
-            <h5 class="card-subtitle mb-2 text-muted">{{ food.category }}</h5>
-            <!-- Price -->
-            <p><b>Nrs. {{ food.total_cost }}</b></p>
-            <!-- Navigate to Cart -->
-            <a href="#" class="btn btn-primary d-block w-100 add_to_cart" data-id="{{ food.id }}" 
-            data-url="{% url 'add_to_cart' food.id %}" title="Go to Cart">
-                <i class="fas fa-shopping-cart"></i> CART
-            </a>
+    <br>
+
+    <!-- Food Items Display -->
+    <div class="row">
+        {% for food in food_items %}
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="food-card shadow-sm rounded">
+                <!-- Food Image -->
+                {% if food.food_image %}
+                <img src="{{ food.food_image.url }}" class="img-fluid rounded-top" style="width: 100%; height: 200px; object-fit: cover;">
+                {% else %}
+                <img src="{% static "assets/images/default-image.jpg" %}" class="card-img-top" alt="{{ food.food_name }}">
+                {% endif %}
+                <div class="card-body">
+                    <!-- Food Name -->
+                    <h4 class="card-title">{{ food.food_name }}</h4>
+                    <!-- Price -->
+                    <p><b>Nrs. {{ food.total_cost }}</b></p>
+                    <!-- Add to Cart -->
+                    <a href="#" class="btn btn-primary d-block w-100 add_to_cart" data-id="{{ food.id }}" 
+                    data-url="{% url 'add_to_cart' food.id %}">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </a>
+                </div>
+            </div>
         </div>
+        {% empty %}
+        <p>No food items found in this category.</p>
+        {% endfor %}
     </div>
-</div>
-{% endfor %}
 
-  </div>
-</div><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Pagination Controls -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if food_items.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ food_items.previous_page_number }}&category={{ selected_category }}">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for num in food_items.paginator.page_range %}
+            <li class="page-item {% if food_items.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}&category={{ selected_category }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+
+            {% if food_items.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ food_items.next_page_number }}&category={{ selected_category }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function () {
-      // Add to Cart
       $('.add_to_cart').click(function (e) {
           e.preventDefault();
           const url = $(this).data('url');
@@ -47,54 +86,13 @@
                   'X-CSRFToken': '{{ csrf_token }}'
               },
               success: function (response) {
-                  if (response.status === 'Success') {
-                      $('#qty-' + itemId).text(response.qty); // Update quantity
-                      alert(response.message); // Success message
-                  } else if (response.status === 'login_required') {
-                      alert('Please login to continue.');
-                  } else {
-                      alert(response.message);
-                  }
+                  alert(response.message || 'Item added to cart');
               },
               error: function () {
                   alert('An error occurred while adding to cart.');
               }
           });
       });
-
-      // Decrease from Cart
-      $('.decrease_cart').click(function (e) {
-          e.preventDefault();
-          const url = $(this).data('url');
-          const itemId = $(this).data('id');
-
-          $.ajax({
-              type: 'POST',
-              url: url,
-              headers: {
-                  'X-CSRFToken': '{{ csrf_token }}'
-              },
-              success: function (response) {
-                  if (response.status === 'Success') {
-                      $('#qty-' + itemId).text(response.qty); // Update quantity
-                      if (response.qty === 0) {
-                          alert('Item removed from cart.');
-                      } else {
-                          alert(response.message);
-                      }
-                  } else if (response.status === 'login_required') {
-                      alert('Please login to continue.');
-                  } else {
-                      alert(response.message);
-                  }
-              },
-              error: function () {
-                  alert('An error occurred while decreasing cart quantity.');
-              }
-          });
-      });
   });
 </script>
-
-
-{% endblock content %}
+{% endblock %}

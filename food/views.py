@@ -12,18 +12,30 @@ from . context_processor import get_cart_amounts, get_cart_counter
 from food.models import Cart, Category, FoodItem
 from django.db.utils import IntegrityError
 from django.contrib import messages
-
+from django.core.paginator import Paginator
 from django.utils.text import slugify
 from django.db.models import Count , Prefetch
 
 # Create your views here.
 def menu(request):
-  food_items = FoodItem.objects.all()
+    selected_category = request.GET.get('category', None)
+    categories = Category.objects.all()
 
-  context = {
-      "food_items" : food_items
-  }
-  return render(request , "food/menu.html" , context)
+    if selected_category:
+        food_items = FoodItem.objects.filter(category__category_name=selected_category)
+    else:
+        food_items = FoodItem.objects.all()
+
+    paginator = Paginator(food_items, 10)  # 10 items per page
+    page_number = request.GET.get('page', 1)
+    paginated_food_items = paginator.get_page(page_number)
+
+    context = {
+        "categories": categories,
+        "selected_category": selected_category,
+        "food_items": paginated_food_items
+    }
+    return render(request, "food/menu.html", context)
 
 
 def get_cart_details(request):
