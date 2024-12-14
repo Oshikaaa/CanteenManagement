@@ -1,0 +1,30 @@
+{% extends 'base2.html' %}
+{% block content %}
+{% load static %}
+<div class="liton__shoping-cart-area mb-120 mt-120" style="padding-top: 180px;">  <!-- Added padding-top -->
+    <!-- 404 area start -->
+    <div class="ltn__404-area ltn__404-area-1 mb-120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="error-404-inner text-center">
+                        <div class="error-img mb-30">
+                            <img src= {% static 'assets/images/sorry.png' %}  alt="#">
+                        </div>
+                        <h1 class="error-404-title d-none">Sorry</h1>
+                        
+                        <!-- <h3>Oops! Looks like something going rong</h3> -->
+                        <p>There was error in Payment</p>
+                        <p>Please Try Again</p>
+                        <div class="btn-wrapper">
+                            <a href="{% url 'index' %}" class="btn btn-transparent"><i class="fas fa-long-arrow-alt-left"></i> BACK TO HOME</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 404 area end -->
+</div>
+
+{% endblock content %}

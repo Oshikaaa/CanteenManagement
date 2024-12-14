@@ -218,29 +218,22 @@ def verify(request):
 
 
 
-def order_complete(request , order_id):
-    order_number = request.GET.get('order_no')
-    transaction_id = request.GET.get('trans_id')
+def order_complete(request, order_id):
 
-    try:
-        order = Order.objects.get(order_number=order_number, payment__transaction_id=transaction_id, is_ordered=True)
-        ordered_product = FoodOrder.objects.filter(order=order)
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    ordered_product = FoodOrder.objects.filter(order=order)
 
-        subtotal = 0
-        for item in ordered_product:
-            subtotal += (item.price * item.quantity)
+    subtotal = sum(item.price * item.quantity for item in ordered_product)
 
-        tax_data = json.loads(order.tax_data)
-        print(tax_data)
-        context = {
-            'order': order,
-            'ordered_product': ordered_product,
-            'subtotal': subtotal,
-            'tax_data': tax_data,
-        }
-        return render(request, 'order/order_complete.html', context)
-    except:
-        return redirect('index')
+    tax_data = json.loads(order.tax_data)
+    
+    context = {
+        'order': order,
+        'ordered_product': ordered_product,
+        'subtotal': subtotal,
+        'tax_data': tax_data,
+    }
+    return render(request, 'order/order_complete.html', context)
 
 
 

@@ -18,8 +18,12 @@
                         <h5 class="card-title">{{ food.food_name }}</h5>
                         <p class="card-text">{{ food.Describe }}</p>
                         <p><strong>Category:</strong> {{ food.category }}</p>
-                        <p><strong>Price:</strong> ${{ food.total_cost }}</p>
+                        <p><strong>Price:</strong> Rs.{{ food.total_cost }}</p>
                     </div>
+                    <a href="#" class="btn btn-primary d-block w-100 add_to_cart" data-id="{{ food.id }}" 
+                    data-url="{% url 'add_to_cart' food.id %}" title="Go to Cart">
+                        <i class="fas fa-shopping-cart"></i> CART
+                    </a>
                 </div>
             </div>
             {% endfor %}
@@ -30,4 +34,68 @@
     </div>
     
 </div>
+</div><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+      // Add to Cart
+      $('.add_to_cart').click(function (e) {
+          e.preventDefault();
+          const url = $(this).data('url');
+          const itemId = $(this).data('id');
+
+          $.ajax({
+              type: 'POST',
+              url: url,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+              success: function (response) {
+                  if (response.status === 'Success') {
+                      $('#qty-' + itemId).text(response.qty); // Update quantity
+                      alert(response.message); // Success message
+                  } else if (response.status === 'login_required') {
+                      alert('Please login to continue.');
+                  } else {
+                      alert('Added to Cart');
+                  }
+              },
+              error: function () {
+                  alert('An error occurred while adding to cart.');
+              }
+          });
+      });
+
+      // Decrease from Cart
+      $('.decrease_cart').click(function (e) {
+          e.preventDefault();
+          const url = $(this).data('url');
+          const itemId = $(this).data('id');
+
+          $.ajax({
+              type: 'POST',
+              url: url,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+              success: function (response) {
+                  if (response.status === 'Success') {
+                      $('#qty-' + itemId).text(response.qty); // Update quantity
+                      if (response.qty === 0) {
+                          alert('Item removed from cart.');
+                      } else {
+                          alert(response.message);
+                      }
+                  } else if (response.status === 'login_required') {
+                      alert('Please login to continue.');
+                  } else {
+                      alert(response.message);
+                  }
+              },
+              error: function () {
+                  alert('An error occurred while decreasing cart quantity.');
+              }
+          });
+      });
+  });
+</script>
 {% endblock %}

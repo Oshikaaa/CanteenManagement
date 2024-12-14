@@ -48,7 +48,11 @@
                                     <tbody>
                                         {% for item in cart_items %}
                                         <tr>
+                                            {% if item.food_item.food_image %}
                                             <td><img src="{{ item.food_item.food_image.url }}" width="40" alt="food"></td>
+                                            {% else %}
+                                            <img src="{% static "assets/images/default-image.jpg" %}"  height="100" width="100"  alt="{{ item.food.food_name }}">
+                                            {% endif %}
                                             <td><b>{{ item.food_item.food_name }}</b></td>
                                             <td>{{ item.quantity }}</td>
                                             <td style="right-padding:0;"> रु‎{{ item.food_item.total_cost }}</td>

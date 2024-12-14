@@ -9,12 +9,12 @@ import logging
 
 from food.models import FoodItem
 class Payment(models.Model):
-  
-  pidx = models.CharField(max_length=200)
-  payment_status = models.JSONField(null=True, blank=True)
+    pidx = models.CharField(max_length=255, unique=True)
+    
+    payment_status = models.JSONField(blank=True, null=True)
 
-  def __str__(self):
-        return self.pidx
+    def __str__(self):
+        return self.transaction_id or "Payment"
     
 
 class Order(models.Model):

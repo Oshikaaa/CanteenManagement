@@ -23,9 +23,13 @@
                                 {% if cart_items %}
                                     {% for cart_item in cart_items %}
                                         <tr>
+                                            {% if cart_item.food_item.food_image %}
                                             <td class="cart-product-image">
                                                 <img src="{{ cart_item.food_item.food_image.url }}" alt="{{ cart_item.food_item.food_name }}" height="48" width="54">
                                             </td>
+                                            {% else %}
+                                            <img src="{% static "assets/images/default-image.jpg" %}"  height="100" width="100"  alt="{{ cart_item.food.food_name }}">
+                                            {% endif %}
                                             <td>{{ cart_item.food_item.food_name }}</td>
                                             <td>Nrs. {{ cart_item.food_item.total_cost|floatformat:2 }}</td>
                                             <td>{{ cart_item.quantity }}</td>
