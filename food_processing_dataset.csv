@@ -1,56 +1,39 @@
 Food_ID,Name,C_Type,Describe
-16,Cake,1,dsdsdsd
-15,Cake Original,1,new new tasty
-17,Hilo,2,vgjgvhjhj
-19,Chiura Tarkari,1,"Couple agency consumer. Eye career land back itself it. Risk effort hear today rather give since.
-Fly defense edge mind. Loss bring team brother old moment. Federal hundred attention for drive way."
-20,Chole Bhature,1,"Official oil hold crime. Focus figure operation.
-No very fall read. Market idea blue."
-21,Toast,1,"Suffer could that once. Under foreign produce. American evening total lead sure.
-Agency hundred picture seem. Draw pay of too star."
-22,Upma,1,"Mother visit art statement cost. Data stuff two find east think.
-Tell lot rest difference. Already threat offer unit high without notice."
-23,Scrambled Eggs,1,Song can share tend. Relationship suggest think offer process throughout or.
-24,Biryani,2,"You think decision player control Mrs seek.
-Finish itself catch free. Fly various word lawyer term event daughter. Could along quickly money nor employee."
-25,Vegetable Pulao,2,Interview treat sell major expert develop much. Concern pretty discuss notice significant who challenge.
-26,Club Sandwich,2,"Add everything risk next special president daughter. Care film professor table.
-Everyone billion loss window serve yes. Claim I stay standard individual defense."
-27,Spaghetti,2,"High high address ok determine lose. Plant need benefit support.
-Deal save conference fish simple onto. Close place center television hot alone process."
-28,Paneer Butter Masala,2,Join subject tax professional education than audience summer. High such far. Mrs yourself level worker director social.
-29,Chips,4,"South fire reduce task evening ever.
-Various Republican manage that environmental clear. Notice me nice response."
-30,Samosa,4,"Wrong fill chance moment. Spend audience detail action south.
-Push military production one. Former color vote program answer green.
-Cost ahead whom off class. General recognize sport yard different."
-31,Pakora,4,Region direction from bar detail good. Always order cover. Compare wait color every. Work case issue we concern.
-32,Fries,4,"Walk which population list war choice wear. Room size control our.
-Able interesting buy surface policy. Term something several note north whose report.
-Because for activity accept movie guess town."
-33,Popcorn,4,"Degree strong far nearly activity who such. Painting whom everything piece unit.
-Sign with there fish career. Want million leader camera. Glass actually although allow."
-35,Pancakes,1,Career daughter its bring four lead account other. Now point ready control.
-36,Egg Sandwich,1,"Building forward option value forget rule. Mouth set billion trial.
-Find explain open hold into really remain. Teach employee find toward difference official."
-37,Aloo Paratha,1,"Various science matter who. Media book center he life quickly.
-Sister make I majority. Later leg west group whole say. Window rest will field east send too."
-38,Muesli,1,"Draw ever scene concern father. Strong deal look. Whole public must. Resource idea section skin save beat.
-Coach cut surface. Eye player wife even senior. May behind of interest look range."
-39,French Toast,1,"Lose themselves collection ready. Determine run later loss.
-Fly question public trade. Few however example send material truth war.
-Nice decide attack. While someone candidate market."
-40,Chicken Curry,2,"Peace poor carry east. Almost thousand bag floor. Radio maintain particular direction poor everyone agree. Sure thus second level.
-Account that its moment method throughout. Will seem team training."
-41,Fried Rice,2,Size thousand personal know listen say. Write west four. Part fact girl scientist push conference while.
-42,Grilled Chicken,2,Window real foot population want hear be. Tonight second avoid same. Wonder national line hard thank find land data.
-43,Tuna Salad,2,"Dream during around onto president executive anything. Nature suggest lose. Cup beyond style possible.
-Message current him too put leader. Than impact receive other."
-44,Beef Stew,2,Firm inside its organization return anyone. Sort assume dream particular artist we often.
-45,Nachos,4,Score against real evidence why. Lead every likely final. On why recognize rich star someone.
-46,Spring Rolls,4,Information they nothing professional third home. Show air threat want site. Religious civil produce wonder idea than.
-47,Hot Dog,4,"Other fear community computer high service. Treat difficult move other clearly in everything. Lead another easy add.
-Far serve subject. Study direction street ground their population grow."
-48,Garlic Bread,4,Hand way open down practice security. Democrat certainly hear. Suggest son democratic that reality.
-49,Cheese Balls,4,"Purpose choice design eight. More seat protect rich never. Through issue Democrat your you.
-Student live picture themselves store quickly. Time us free to scientist just. General meeting coach run."
+102,Pancakes,3,Fluffy pancakes served with syrup and butter.
+103,Egg Sandwich,3,"Toasted sandwich with egg, cheese, and bacon."
+104,Aloo Paratha,3,Indian flatbread stuffed with spiced potatoes.
+105,Muesli,3,"A healthy mix of oats, nuts, and dried fruits."
+106,French Toast,3,"Bread soaked in egg and milk, then fried until golden."
+107,Bagel,3,"A dense bread roll, often served with cream cheese."
+108,Smoothie Bowl,3,A blend of fruits topped with granola and seeds.
+109,Omelet,3,Egg-based dish with vegetables and cheese.
+110,Waffles,3,Crispy waffles served with syrup and fruits.
+111,Breakfast Burrito,3,"A tortilla filled with eggs, bacon, and veggies."
+112,Chicken Curry,4,"Tender chicken simmered in a rich, spiced curry sauce."
+113,Fried Rice,4,"Stir-fried rice with vegetables, eggs, and choice of meat."
+114,Grilled Chicken,4,Marinated chicken grilled to perfection.
+115,Tuna Salad,4,"A fresh salad with tuna, lettuce, tomatoes, and dressing."
+116,Beef Stew,4,Slow-cooked beef with vegetables in a hearty broth.
+117,Spaghetti Bolognese,4,Pasta served with a rich meat sauce.
+2,Pizza,5,Italian style pizza
+4,Samosa,5,Crispy fried dough with stuffed potato.
+6,Fried Rice,4,Fried rice with chutney.
+3,Chicken Momo,4,Chicken Momo home made.
+5,Sandwich,3,Only veg sandwich is healthy.
+7,Veg Wrapper,4,roti
+8,Choupsey,4,noodles
+118,Vegetable Stir Fry,4,A mix of stir-fried vegetables in a savory sauce.
+119,Lamb Kebabs,4,Grilled lamb skewers with spices and herbs.
+120,Caesar Salad,4,Crispy lettuce with Caesar dressing and croutons.
+121,Veggie Burger,4,Grilled vegetable patty served in a bun.
+122,Nachos,5,Crispy tortilla chips topped with melted cheese and salsa.
+123,Spring Rolls,5,Vegetable-filled crispy rolls with dipping sauce.
+124,Hot Dog,5,Grilled sausage served in a bun with condiments.
+125,Garlic Bread,5,"Bread topped with garlic and butter, baked until crispy."
+126,Cheese Balls,5,Fried balls of cheese with a crispy coating.
+127,Samosa,5,Crispy pastry filled with spiced potatoes and peas.
+128,Chicken Wings,5,Spicy wings served with dipping sauce.
+129,Popcorn,5,Lightly salted or buttered popcorn.
+130,Fruit Salad,5,Fresh seasonal fruits mixed together.
+131,Pretzels,5,Baked twisted bread with salt.
+132,Icecream,6,"a frozen dessert typically made from milk or cream that has been flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit, such as strawberries or peaches."
