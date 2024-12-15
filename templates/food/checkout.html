@@ -335,14 +335,6 @@
                     <h4 class="title-2">Cart Totals</h4>
                     <table class="table table-bordered">
                         <tbody>
-                            {% for key, value in tax_dict.items %}
-                                {% for i, j in value.items %}
-                                <tr>
-                                    <td>{{ key }} <small>({{ i }}%)</small></td>
-                                    <td><span class="currency">रु‎</span> <span id="tax-{{ key }}">{{ j }}</span></td>
-                                </tr>
-                                {% endfor %}
-                            {% endfor %}
 
                             {% for cart_item in cart_items %}
                             <tr>
@@ -350,11 +342,6 @@
                                 <td><span id="quantity-{{ cart_item.project.id }}">{{ cart_item.quantity }}</span></td>
                             </tr>
                             {% endfor %}
-
-                            <tr>
-                                <td>Cart Subtotal</td>
-                                <td><span id="subtotal">रु‎ {{ subtotal }}</span></td>
-                            </tr>
                             <tr>
                                 <td><strong>Order Total</strong></td>
                                 <td><strong>रु‎ <span id="total">{{ grand_total }}</span></strong></td>
