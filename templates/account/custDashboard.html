@@ -2,22 +2,22 @@
 {% block content %} 
 {% load static %} 
 
-
+<!-- Alerts Section -->
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <!-- Load message -->
         {% include 'includes/alerts.html' %}
     </div>
 </div>
 
 <br>
+<!-- Dashboard Stats Section -->
 <div class="row">
+    <!-- Total Orders -->
     <div class="col-md-6 col-xl-3">
         <div class="card">
             <div class="card-body">
                 <div class="mb-4">
-                    
-                    <h5 class="card-title mb-0"><a href="">Total Orders</a>
+                    <h5 class="card-title mb-0">Total Orders</h5>
                 </div>
                 <div class="row d-flex align-items-center mb-4">
                     <div class="col-8">
@@ -25,101 +25,118 @@
                             {{ orders_count }}
                         </h2>
                     </div>
-                   
                 </div>
-
-                
             </div>
-           
-        </div><!-- end card-->
-    </div> <!-- end col-->
-
-    <div class="col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="mb-4">
-                    <span class="badge badge-soft-primary float-right">All Time</span>
-                    <h5 class="card-title mb-0"><a href="">Total Sale</a></h5>
-                </div>
-                <div class="row d-flex align-items-center mb-4">
-                    <div class="col-8">
-                        <h2 class="d-flex align-items-center mb-0">
-                        </h2>
-                    </div>
-                    
-                </div>
-
-                
-            </div>
-           
-        </div><!-- end card-->
-    </div> <!-- end col-->
-
-    <div class="col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="mb-4">
-                    <span class="badge badge-soft-primary float-right">All Time</span>
-                    <h5 class="card-title mb-0">Most Sold Food</h5>
-                </div>
-                <div class="row d-flex align-items-center mb-4">
-                    <div class="col-8">
-                        <h2 class="d-flex align-items-center mb-0">
-                        </h2>
-                    </div>
-                    
-                </div>
-                <div class="progress shadow-sm" style="height: 5px;">
-                    <div class="progress-bar bg-success" role="progressbar"aria-valuemin="0" ></div>
-                </div>
-                
-            </div>
-           
         </div>
-        <!--end card-->
-    </div> <!-- end col-->
+    </div> 
+
+    <!-- Most Sold Food -->
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">All Time</span>
+                    <h5 class="card-title mb-0">Most Ordered Food</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            {{ most_ordered_food }}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Most Sold Category -->
     <div class="col-md-6 col-xl-3">
         <div class="card">
             <div class="card-body">
                 <div class="mb-4">
                     <span class="badge badge-soft-primary float-right">Current</span>
-                    <h5 class="card-title mb-0">Most Sold Category</h5>
+                    <h5 class="card-title mb-0">Most Ordered Category</h5>
                 </div>
                 <div class="row d-flex align-items-center mb-4">
                     <div class="col-8">
                         <h2 class="d-flex align-items-center mb-0">
+                            {{ most_ordered_category }}
                         </h2>
                     </div>
-                    
                 </div>
             </div>
-           
         </div>
-        <!--end card-->
-    </div> <!-- end col-->
-</div>
-<!-- end row-->
-<div class="row">
-    <div class="col-md-4">
+    </div>
+    <!-- Most Sold Category -->
+    <div class="col-md-6 col-xl-3">
         <div class="card">
-            <div class="card-header">
-                Upcoming Events
-            </div>
             <div class="card-body">
-                <blockquote class="card-bodyquote">
-         
-                        <p class="card-text"><a href=""><b>{{ proj.project_title }}</b></a> matures on {{ proj.return_date }}</p>
-                  
-                        <p class="card-text">No upcoming events</p>
-                 
-                    </footer>
-                </blockquote>
+                <div class="mb-4">
+                    <span class="badge badge-soft-primary float-right">All Time</span>
+                    <h5 class="card-title mb-0">Total Amount Spent</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            Nrs. {{ total_spent|floatformat:2 }}
+                        </h2>
+                    </div>
+                </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 
 
 
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h2>Recent Orders</h2>
+          <table id="basic-datatable" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Order Number</th>
+                <th>Food Item</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Amount (Nrs.)</th>
+                <th>Order Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders_with_food %}
+                {% for food in order.foodorder_set.all %}
+                <tr>
+                  <td>{{ order.order_number }}</td>
+                  <td>{{ food.food_item.food_name }}</td>
+                  <td>
+                    {% if food.food_item.food_image %}
+                    <img
+                    src="{{ food.food_item.food_image.url }}"
+                    alt="{{ food.food_item.food_name }}"
+                    style="width: 50px; height: 50px; object-fit: cover"
+                  />
+                    {% else %}
+                    <img src="{% static 'assets/images/default-image.jpg' %}" height="48" width="54" alt="{{ food.food_item.food_name }}">
+                    {% endif %}
+                  </td>
+                  <td>{{ food.quantity }}</td>
+                  <td>Nrs. {{ food.amount|floatformat:2 }}</td>
+                  <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% endfor %}
+              {% empty %}
+              <tr>
+                <td colspan="6">No orders found</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

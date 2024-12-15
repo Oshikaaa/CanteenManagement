@@ -14,6 +14,12 @@
         <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
         <link href="{% static "assets/css/theme.css" %}" rel="stylesheet" type="text/css" />
         <link href="{% static "assets/css/icons.css" %}" rel="stylesheet" type="text/css" />
+
+        <link href="{% static 'plugins/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'plugins/datatables/responsive.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'plugins/datatables/buttons.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'plugins/datatables/select.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+
         
    
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -128,13 +134,13 @@
                                 <a href="{% url "custDashboard" %}" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span>Dashboard</span></a>
                             </li>
                             <li>
-                                <a href="" class="waves-effect"><i class="mdi mdi-account"></i><span>Profile</span></a>
+                                <a href="{% url "user_profile" %}" class="waves-effect"><i class="mdi mdi-account"></i><span>Profile</span></a>
                             </li>
                             <li>
-                                <a href="" class="waves-effect"><i class="mdi mdi-cart"></i><span>Orders</span></a>
+                                <a href="{% url "customer_my_orders" %}" class="waves-effect"><i class="mdi mdi-cart"></i><span>All Orders</span></a>
                             </li>
                             <li>
-                                <a href="" class="waves-effect"><i class="mdi mdi-lock-reset"></i><span>Change Password</span></a>
+                                <a href="{% url "customer_change_password" %}" class="waves-effect"><i class="mdi mdi-lock-reset"></i><span>Change Password</span></a>
                             </li>
                             <li>
                                 <a href="{% url "logout" %}" class="waves-effect"><i class="mdi mdi-logout"></i><span>Logout</span></a>
@@ -211,8 +217,24 @@
         <!-- App js -->
         <script src="{% static "assets/js/theme.js" %}"></script>
 
+        <!-- Include Select2 library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
+        <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/dataTables.bootstrap4.js' %}"></script>
+        <script src="{% static 'plugins/datatables/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/buttons.bootstrap4.min.js' %}"></script> 
+        <script src="{% static 'plugins/datatables/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/buttons.flash.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/buttons.print.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/dataTables.keyTable.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/dataTables.select.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/pdfmake.min.js' %}"></script>
+        <script src="{% static 'plugins/datatables/vfs_fonts.js' %}"></script>
 
+        <script src="{% static "assets/pages/datatables-demo.js" %}"></script>
 
 
     </body>

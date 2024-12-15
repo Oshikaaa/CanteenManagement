@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 "food.context_processor.get_cart_counter",
                 "food.context_processor.get_cart_amounts",
+                'account.context_processor.get_user_profile',
             ],
         },
     },
