@@ -13,12 +13,15 @@ urlpatterns = [
     path('adminDashboard/', views.adminDashboard, name='adminDashboard'),
 
     path('my_orders/', views.my_orders, name='customer_my_orders'),
+    path('viewAllOrders/', views.view_all_orders, name='view_all_orders'),
     path('customer_order_detail/<int:order_number>/', views.order_detail, name='customer_order_detail'),
+    path('admin_order_detail/<int:order_number>/', views.order_detail, name='admin_order_detail'),
 
     path('customer_change_password/', views.customer_change_password, name='customer_change_password'),
     path('admin_change_password/', views.admin_change_password, name='admin_change_password'),
 
     path('user_profile/', views.user_profile, name='user_profile'),
+    path('admin_profile/', views.admin_profile, name='admin_profile'),
 
     path('index/', views.index, name='index'),
      

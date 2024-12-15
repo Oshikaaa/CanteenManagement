@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!-- All Orders Section -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2>All Orders</h2>
+                <table id="basic-datatable" class="table table-striped dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Food Item</th>
+                            <th>Image</th>
+                            <th>Quantity</th>
+                            <th>Amount (Nrs.)</th>
+                            <th>Order Date</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in all_orders %}
+                            {% for food in order.foodorder_set.all %}
+                            <tr>
+                                <td>{{ order.order_number }}</td>
+                                <td>{{ food.food_item.food_name }}</td>
+                                <td>
+                                    {% if food.food_item.food_image %}
+                                    <img src="{{ food.food_item.food_image.url }}" 
+                                         alt="{{ food.food_item.food_name }}" 
+                                         style="width: 50px; height: 50px; object-fit: cover;">
+                                    {% else %}
+                                    <img src="{% static 'assets/images/default-image.jpg' %}" 
+                                         height="50" width="50" 
+                                         alt="{{ food.food_item.food_name }}">
+                                    {% endif %}
+                                </td>
+                                <td>{{ food.quantity }}</td>
+                                <td>Nrs. {{ food.amount|floatformat:2 }}</td>
+                                <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                                <td><a href="{% url 'admin_order_detail' order.order_number %}" class="btn btn rounded-lg" style="background-color:#2B3D51;color:white;">Details</a></td>
+                            </tr>
+                            {% endfor %}
+                        {% empty %}
+                        <tr>
+                            <td colspan="6">No orders found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

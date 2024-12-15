@@ -1,4 +1,5 @@
-from datetime import date
+from datetime import date, datetime, timedelta
+from django.utils import timezone
 import json
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -168,8 +169,58 @@ def custDashboard(request):
 @login_required(login_url='login')
 @user_passes_test(check_role_admin)
 def adminDashboard(request):
+    # Total Stats
+    orders_count = FoodOrder.objects.count()
+    total_sales = FoodOrder.objects.aggregate(total_sales=Sum('amount'))['total_sales'] or 0
+    most_sold_food = FoodOrder.objects.values('food_item__food_name').annotate(total_quantity=Sum('quantity')).order_by('-total_quantity').first()
+    most_sold_category = FoodOrder.objects.values('food_item__category__category_name').annotate(total_quantity=Sum('quantity')).order_by('-total_quantity').first()
 
-    return render(request, 'account/adminDashboard.html' )
+    # Weekly Data Calculation
+    last_week = timezone.now() - timedelta(days=7)
+
+    # Weekly Most Sold Food
+    food_sales = FoodOrder.objects.filter(created_at__gte=last_week).values(
+        'food_item__food_name'
+    ).annotate(total_quantity=Sum('quantity')).order_by('-total_quantity')[:5]
+
+    # Weekly Most Sold Category
+    category_sales = FoodOrder.objects.filter(created_at__gte=last_week).values(
+        'food_item__category__category_name'
+    ).annotate(total_quantity=Sum('quantity')).order_by('-total_quantity')[:5]
+
+    total_food_sales = FoodOrder.objects.values('food_item__food_name').annotate(
+        total_amount=Sum('amount')
+    ).order_by('-total_amount')[:5]
+
+    # Top 10 Recent Orders
+    orders_with_food = Order.objects.prefetch_related('foodorder_set').order_by('-created_at')[:10]
+
+    # Chart Data Preparation
+    food_labels = [item['food_item__food_name'] for item in food_sales]
+    food_data = [item['total_quantity'] for item in food_sales]
+
+    category_labels = [item['food_item__category__category_name'] for item in category_sales]
+    category_data = [item['total_quantity'] for item in category_sales]
+
+    sales_food_labels = [item['food_item__food_name'] for item in total_food_sales]
+    sales_food_data = [item['total_amount'] for item in total_food_sales]
+
+
+    context = {
+        'orders_count': orders_count,
+        'total_sales': total_sales,
+        'most_sold_food': most_sold_food['food_item__food_name'] if most_sold_food else "N/A",
+        'most_sold_category': most_sold_category['food_item__category__category_name'] if most_sold_category else "N/A",
+        'food_labels': food_labels,
+        'food_data': food_data,
+        'category_labels': category_labels,
+        'category_data': category_data,
+        'sales_food_labels': sales_food_labels,
+        'sales_food_data': sales_food_data,
+        "orders_with_food" : orders_with_food
+
+    }
+    return render(request, 'account/adminDashboard.html', context)
 
 
 
@@ -177,11 +228,9 @@ def adminDashboard(request):
 
 def index(request):
     category = Category.objects.all()
-
     context = {
         "category" : category 
     }
-
     return render(request , "index.html" , context)
 
 
@@ -240,7 +289,6 @@ def my_orders(request):
 
 
 @login_required(login_url='login')
-@user_passes_test(check_role_customer)
 def order_detail(request, order_number):
     try:
         order = Order.objects.get(order_number=order_number, is_ordered=True)
@@ -283,3 +331,39 @@ def user_profile(request):
         "profile": user_profile,  # Include profile in context
     }
     return render(request, "account/user_profile.html", context)
+
+@login_required(login_url='login')
+@user_passes_test(lambda user: user.role == User.ADMIN)
+def admin_profile(request):
+    admin = request.user
+    admin_profile, created = UserProfile.objects.get_or_create(user=admin)
+
+    if request.method == "POST":
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=admin_profile)
+        user_form = UserChangeForm(request.POST, instance=admin)
+
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect("admin_profile")
+    else:
+        profile_form = UserProfileForm(instance=admin_profile)
+        user_form = UserChangeForm(instance=admin)
+
+    context = {
+        "profile_form": profile_form,
+        "user_form": user_form,
+        "profile": admin_profile,  
+    }
+    return render(request, "account/admin_profile.html", context)
+
+
+@login_required(login_url='login')
+@user_passes_test(lambda user: user.role == User.ADMIN)
+def view_all_orders(request):
+    # Fetch all orders with food items preloaded
+    all_orders = Order.objects.prefetch_related('foodorder_set').order_by('-created_at')
+
+    context = {
+        'all_orders': all_orders,
+    }
+    return render(request, 'account/view_all_orders.html', context)

@@ -43,8 +43,7 @@
                 </div>
                 <div class="row d-flex align-items-center mb-4">
                     <div class="col-8">
-                        <h2 class="d-flex align-items-center mb-0">
-                        </h2>
+                        <h2 class="d-flex align-items-center mb-0">Nrs. {{ total_sales|floatformat:2 }}</h2>
                     </div>
                     
                 </div>
@@ -64,15 +63,10 @@
                 </div>
                 <div class="row d-flex align-items-center mb-4">
                     <div class="col-8">
-                        <h2 class="d-flex align-items-center mb-0">
-                        </h2>
+                        <h2 class="d-flex align-items-center mb-0">{{ most_sold_food }}</h2>
                     </div>
                     
                 </div>
-                <div class="progress shadow-sm" style="height: 5px;">
-                    <div class="progress-bar bg-success" role="progressbar"aria-valuemin="0" ></div>
-                </div>
-                
             </div>
            
         </div>
@@ -87,8 +81,7 @@
                 </div>
                 <div class="row d-flex align-items-center mb-4">
                     <div class="col-8">
-                        <h2 class="d-flex align-items-center mb-0">
-                        </h2>
+                        <h2 class="d-flex align-items-center mb-0">{{ most_sold_category }}</h2
                     </div>
                     
                 </div>
@@ -98,27 +91,150 @@
         <!--end card-->
     </div> <!-- end col-->
 </div>
+<div class="col-lg-4 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2><strong>Most Sold Food - Weekly</strong> </h2>
+            <canvas id="mostSoldFoodChart" style="width:100% ; height:400px"></canvas>
+        </div>
+    </div>
+</div>
 <!-- end row-->
-<div class="row">
-    <div class="col-md-4">
+<div class="col-lg-4 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2><strong>Most Sold Category - Weekly</strong> </h2>
+            <canvas id="mostSoldCategoryChart" style="width:100% ; height:400px"></canvas>
+        </div>
+    </div>
+</div>
+<!-- end row-->
+<div class="col-lg-4 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2><strong>Total Sales</strong> </h2>
+            <canvas id="totalSalesChart" style="width:100% ; height:400px"></canvas>
+        </div>
+    </div>
+</div>
+<!-- end row-->
+<!-- Recent Orders Section -->
+
+    <div class="col-lg-12 mt-5">
         <div class="card">
-            <div class="card-header">
-                Upcoming Events
-            </div>
             <div class="card-body">
-                <blockquote class="card-bodyquote">
-         
-                        <p class="card-text"><a href=""><b>{{ proj.project_title }}</b></a> matures on {{ proj.return_date }}</p>
-                  
-                        <p class="card-text">No upcoming events</p>
-                 
-                    </footer>
-                </blockquote>
+                <h2>Recent Orders</h2>
+                <table id="basic-datatable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Food Item</th>
+                            <th>Image</th>
+                            <th>Quantity</th>
+                            <th>Amount (Nrs.)</th>
+                            <th>Order Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders_with_food %}
+                            {% for food in order.foodorder_set.all %}
+                            <tr>
+                                <td>{{ order.order_number }}</td>
+                                <td>{{ food.food_item.food_name }}</td>
+                                <td>
+                                    {% if food.food_item.food_image %}
+                                    <img src="{{ food.food_item.food_image.url }}" 
+                                        alt="{{ food.food_item.food_name }}" 
+                                        style="width: 50px; height: 50px; object-fit: cover;">
+                                    {% else %}
+                                    <img src="{% static 'assets/images/default-image.jpg' %}" 
+                                        height="50" width="50" 
+                                        alt="{{ food.food_item.food_name }}">
+                                    {% endif %}
+                                </td>
+                                <td>{{ food.quantity }}</td>
+                                <td>Nrs. {{ food.amount|floatformat:2 }}</td>
+                                <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% empty %}
+                        <tr>
+                            <td colspan="6">No orders found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- View All Orders Link -->
+                <div class="text-right mt-3">
+                    <a href="{% url 'view_all_orders' %}" class="btn btn-primary">View All Orders</a>
+                </div>
             </div>
         </div>
-    </div> 
-</div>
+    </div>
 
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart Rendering Logic -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Bar Chart for Most Sold Food Weekly
+    const mostSoldFoodChart = new Chart(document.getElementById("mostSoldFoodChart"), {
+        type: "bar",
+        data: {
+            labels: {{ food_labels|safe }},
+            datasets: [{
+                label: "Quantity Sold",
+                data: {{ food_data|safe }},
+                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 2
+            }]
+        }
+    });
+
+    // Line Chart for Most Sold Category Weekly
+    const mostSoldCategoryChart = new Chart(document.getElementById("mostSoldCategoryChart"), {
+        type: "line",
+        data: {
+            labels: {{ category_labels|safe }},
+            datasets: [{
+                label: "Category Sales",
+                data: {{ category_data|safe }},
+                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                fill: false,
+                tension: 0.1
+            }]
+        }
+    });
+     // Total Sales by Food
+     new Chart(document.getElementById("totalSalesChart"), {
+        type: "bar",
+        data: {
+            labels: {{ sales_food_labels|safe }},
+            datasets: [{
+                label: "Total Sales (Nrs.)",
+                data: {{ sales_food_data|safe }},
+                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: "top" },
+                title: {
+                    display: true,
+                    text: "Total Sales by Food"
+                }
+            }
+        }
+    });
+});
+</script>
 
 
 

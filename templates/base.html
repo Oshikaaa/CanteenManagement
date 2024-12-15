@@ -155,13 +155,13 @@
                             </li>
                             
                             <li>
-                                <a href="" class="waves-effect"><i class="mdi mdi-account"></i><span>Profile</span></a>
+                                <a href="{% url "admin_profile" %}" class="waves-effect"><i class="mdi mdi-account"></i><span>Profile</span></a>
                             </li>
                             <li>
-                                <a href="" class="waves-effect"><i class="mdi mdi-cart"></i><span>Orders</span></a>
+                                <a href="{% url "view_all_orders" %}" class="waves-effect"><i class="mdi mdi-cart"></i><span>Orders</span></a>
                             </li>
                             <li>
-                                <a href="" class="waves-effect"><i class="mdi mdi-lock-reset"></i><span>Change Password</span></a>
+                                <a href="{% url "admin_change_password" %}" class="waves-effect"><i class="mdi mdi-lock-reset"></i><span>Change Password</span></a>
                             </li>
                             <li>
                                 <a href="{% url "logout" %}" class="waves-effect"><i class="mdi mdi-logout"></i><span>Logout</span></a>
