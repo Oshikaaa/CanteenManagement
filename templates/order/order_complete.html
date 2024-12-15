@@ -19,7 +19,8 @@
                     </div>
                 </div>
                 
-                <h6>Hello {{ order.name }}, </h6><span>Review your order details below.</span>
+                <h6>Hello {{ order.name }},</h6>
+                <h5 class="text-success">You will be notified when your Order is ready.</h5>
                 <hr>
 
                 <div class="d-flex justify-content-between">
@@ -33,7 +34,7 @@
                         <span class="d-block">Payment Method: </span><span class="font-weight-bold">{{ order.payment_method }}</span>
                     </div>
                     <div>
-                        <span class="d-block">Transaction ID: </span><span class="font-weight-bold">{{ order.payment.transaction_id }}</span>
+                        <span class="d-block">Transaction ID: </span><span class="font-weight-bold">{{ order.payment.pidx }}</span>
                     </div>
                 </div>
                 <hr>
@@ -41,8 +42,16 @@
                     <tbody>
                         {% for order in ordered_product %}
                             <tr>
-                                <td><img src="{{ order.food_item.image.url }}" width="60" alt="food_item Image"></td>
-                                <td>{{ order.food_item.name }} </td>
+                                
+                                <td>
+                                    {% if order.food_item.food_image %}
+                                    <img src="{{ order.food_item.food_image.url }}" width="60" alt="food_item Image">
+                                    {% else %}
+                                    <img src="{% static 'assets/images/default-image.jpg' %}" height="48" width="54" alt="{{ cart_item.food_item.food_name }}">
+                                    {% endif %}
+                                </td>
+                                
+                                <td>{{ order.food_item.food_name }} </td>
                                 <td>
                                     <p class="mb-0"><b>{{ order.food_item.name }}</b></p>
                                 </td>
@@ -59,32 +68,13 @@
                     </div>
                     <div class="col-md-6">
                         <ul>
-                            <li style="list-style-type: none;">
-                                Subtotal
-                                <span class="price float-right">
-                                    <span class="currency">रु‎</span>
-                                    <span id="subtotal">{{ subtotal }}</span>
-                                </span>
-                            </li>
-
-                            {% for key, value in tax_data.items %}
-                                {% for i, j in value.items %}
-                                    <li style="list-style-type: none;">
-                                        {{ key }} <small>({{ i }}%)</small>
-                                        <span class="price float-right">
-                                            <span class="currency">रु‎</span>
-                                            <span id="tax-{{ key }}">{{ j }}</span>
-                                        </span>
-                                    </li>
-                                {% endfor %}
-                            {% endfor %}
-
+                            
 
                             <li style="list-style-type: none; font-weight: 600;">
                                 TOTAL
                                 <span class="price float-right">
-                                    <span class="currency">रु‎</span>
-                                    <span id="total">{{ order.total }}</span>
+                                    <span class="currency  text-danger">Nrs </span>
+                                    <span class=" text-danger" id="total">{{ order.total }}</span>
                                 </span>
                             </li>
                         </ul>

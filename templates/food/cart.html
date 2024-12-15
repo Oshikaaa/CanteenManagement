@@ -9,46 +9,74 @@
             <div class="col-lg-12">
                 <div class="shoping-cart-inner">
                     <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if cart_items %}
-                                    {% for cart_item in cart_items %}
-                                        <tr>
-                                            {% if cart_item.food_item.food_image %}
-                                            <td class="cart-product-image">
-                                                <img src="{{ cart_item.food_item.food_image.url }}" alt="{{ cart_item.food_item.food_name }}" height="48" width="54">
-                                            </td>
-                                            {% else %}
-                                            <img src="{% static "assets/images/default-image.jpg" %}"  height="100" width="100"  alt="{{ cart_item.food.food_name }}">
-                                            {% endif %}
-                                            <td>{{ cart_item.food_item.food_name }}</td>
-                                            <td>Nrs. {{ cart_item.food_item.total_cost|floatformat:2 }}</td>
-                                            <td>{{ cart_item.quantity }}</td>
-                                            <td class="text-danger">
-                                                <a href="#" class="delete_cart" data-id="{{ cart_item.id }}" data-url="{% url 'delete_cart' cart_item.id %}">
-                                                    <i class="fas fa-trash"></i> Remove
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr>
-                                        <td colspan="5">
-                                            <p>No items in your cart.</p>
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
+                        <!-- SHOPPING CART AREA START -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if cart_items %}
+                            {% for cart_item in cart_items %}
+                            <tr>
+                                <td>
+                                    {% if cart_item.food_item.food_image %}
+                                    <img src="{{ cart_item.food_item.food_image.url }}" alt="{{ cart_item.food_item.food_name }}" height="48" width="54">
+                                    {% else %}
+                                    <img src="{% static 'assets/images/default-image.jpg' %}" height="48" width="54" alt="{{ cart_item.food_item.food_name }}">
+                                    {% endif %}
+                                </td>
+                                <td>{{ cart_item.food_item.food_name }}</td>
+                                <td>Nrs. {{ cart_item.food_item.total_cost|floatformat:2 }}</td>
+                                
+                                <!-- Quantity Control -->
+                                <td>
+                                    <div class="quantity-control">
+                                        <a href="#" class="decrease_cart text-danger" 
+                                        data-id="{{ cart_item.food_item.id }}" 
+                                        data-url="{% url 'decrease_cart' cart_item.food_item.id %}" 
+                                        title="Decrease Quantity">
+                                            <i class="fas fa-minus-circle"></i>
+                                        </a>
+
+                                        <span id="qty-{{ cart_item.food_item.id }}" style="margin: 0 10px;">{{ cart_item.quantity }}</span>
+
+                                        <a href="#" class="add_to_cart text-success" 
+                                        data-id="{{ cart_item.food_item.id }}" 
+                                        data-url="{% url 'add_to_cart' cart_item.food_item.id %}" 
+                                        title="Add Quantity">
+                                            <i class="fas fa-plus-circle"></i>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <!-- Delete Action -->
+                                <td class="text-warning">
+                                    <a href="#" class="delete_cart" 
+                                    data-id="{{ cart_item.id }}" 
+                                    data-url="{% url 'delete_cart' cart_item.id %}" 
+                                    title="Remove from Cart">
+                                        <i class="fas fa-trash-alt"></i> Remove
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">
+                                    <p>No items in your cart.</p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                <!-- SHOPPING CART AREA END -->
+
                     </div>
                     <div class="shoping-cart-total mt-50 mb-5">
                         <h4>Cart Totals</h4>
@@ -88,5 +116,104 @@
     </div>
 </div>
 <!-- SHOPPING CART AREA END -->
+
+</div><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+      // Add to Cart
+      $('.add_to_cart').click(function (e) {
+          e.preventDefault();
+          const url = $(this).data('url');
+          const itemId = $(this).data('id');
+
+          $.ajax({
+              type: 'POST',
+              url: url,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+              success: function (response) {
+                  if (response.status === 'Success') {
+                      $('#qty-' + itemId).text(response.qty); // Update quantity
+                      alert(response.message); // Success message
+                  } else if (response.status === 'login_required') {
+                      alert('Please login to continue.');
+                  } else {
+                      alert('Added to cart');
+                  }
+              },
+              error: function () {
+                  alert('An error occurred while adding to cart.');
+              }
+          });
+      });
+
+      // Delegate Decrease from Cart
+    $(document).on('click', '.decrease_cart', function (e) {
+        e.preventDefault();
+        const url = $(this).data('url');
+        const itemId = $(this).data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function (response) {
+                if (response.status === 'Success') {
+                    if (response.qty === 0) {
+                        $('tr[data-item-id="' + itemId + '"]').remove();  // Remove row if qty is 0
+                    } else {
+                        $('#qty-' + itemId).text(response.qty);  // Update quantity
+                    }
+                    
+                    // Update cart totals
+                    $('#subtotal').text('Nrs. ' + response.cart_amount.subtotal);
+                    $('#total').text(response.cart_amount.total);
+                } else if (response.status === 'login_required') {
+                    alert('Please login to continue.');
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert('An error occurred while decreasing cart quantity.');
+            }
+        });
+    });
+
+    // Delegate Delete Cart Item
+    $(document).on('click', '.delete_cart', function (e) {
+        e.preventDefault();
+        const url = $(this).data('url');
+        const cartItemRow = $(this).closest('tr');
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function (response) {
+                if (response.status === 'Success') {
+                    cartItemRow.remove();  // Remove cart row
+                    $('#subtotal').text('Nrs. ' + response.cart_amount.subtotal);  // Update subtotal
+                    $('#total').text(response.cart_amount.total);  // Update grand total
+                    alert(response.message);
+                } else if (response.status === 'login_required') {
+                    alert('Please login to continue.');
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert('An error occurred while deleting the cart item.');
+            }
+        });
+    });
+
+  });
+</script>
 
 {% endblock %}

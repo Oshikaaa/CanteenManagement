@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+</head>
+<body>
+    <h2>Order Confirmation</h2>
+    <p>Dear {{ user.first_name }}</p>
+    <p>Thank you for your order!</p>
+
+    <h3>Order Details:</h3>
+    <p><strong>Order Number:</strong> {{ order_number }}</p>
+    <p><strong>Status:</strong> {{ status }}</p>
+
+    <h4>Order Summary:</h4>
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in ordered_products %}
+            <tr>
+                <td>{{ item.food_item.food_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>Nrs. {{ item.price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>Total Amount: Nrs. {{ subtotal|floatformat:2 }}</h4>
+
+    <p>Thank you for ordering with us!</p>
+</body>
+</html>

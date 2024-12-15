@@ -283,13 +283,14 @@
                                 <tbody>
                                     {% for cart_item in cart_items %}
                                     <tr id="cart-item-{{ cart_item.id }}">
-                                        {% if cart_item.food_item.food_image %}
                                         <td class="cart-product-image">
+                                            {% if cart_item.food_item.food_image %}
                                             <a href="product-details.html"><img src="{{ cart_item.food_item.food_image.url }}" alt="FOOD" height="80" width="40"></a>
-                                        </td>
-                                        {% else %}
+                                            {% else %}
                                             <img src="{% static "assets/images/default-image.jpg" %}"  height="100" width="100"  alt="{{ cart_item.food.food_name }}">
                                             {% endif %}
+                                        </td>
+                                        
                                         <td class="cart-product-info">
                                             <h5><a href="product-details.html">{{ cart_item.food_item.food_name }}</a></h5>
                                         </td>

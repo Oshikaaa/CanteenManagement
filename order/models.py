@@ -14,7 +14,7 @@ class Payment(models.Model):
     payment_status = models.JSONField(blank=True, null=True)
 
     def __str__(self):
-        return self.transaction_id or "Payment"
+        return self.pidx or "Payment"
     
 
 class Order(models.Model):

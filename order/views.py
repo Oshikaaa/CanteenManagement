@@ -9,6 +9,7 @@ from food.context_processor import get_cart_amounts
 from food.models import Cart, FoodItem
 from order.forms import OrderForm
 from order.models import FoodOrder, Order, Payment
+from order.send_email import send_order_email
 from order.utils import generate_order_number
 from django.db.models import F
 
@@ -47,7 +48,6 @@ def place_order(request):
             form.cleaned_data['phone'] = phone_number
             order.phone=phone_number
             for cart_item in cart_items:
-                print("===============>")
                 order.food_item = cart_item.food_item
             order.email = form.cleaned_data['email']
             order.address = form.cleaned_data['address']
@@ -85,10 +85,6 @@ def place_order(request):
 
 
 
-from django.db.models import F
-from django.http import HttpResponseRedirect
-from decimal import Decimal
-import requests
 
 def payments(request):
     # Retrieve session data
@@ -178,42 +174,64 @@ def payments(request):
     })
 
 
+from django.db import IntegrityError
+
 def verify(request):
     pidx = request.GET.get('pidx')
+    order_number = request.GET.get('purchase_order_id')
+
+    if not pidx or not order_number:
+        return render(request, 'food/pay_error.html', {"error": "Invalid payment or order details."})
+
     data = {
         "pidx": pidx
     }
     headers = {
-        "Authorization": f"Key {KHALTI_SECRET_KEY}" 
+        "Authorization": f"Key {KHALTI_SECRET_KEY}"
     }
+
     response = requests.post("https://a.khalti.com/api/v2/epayment/lookup/", json=data, headers=headers)
     data = response.json()
     status = data.get("status")
     updated_pidx = data.get("pidx")
 
-    status_details = {
-        "status": status,
-        "pidx": updated_pidx
-    }
-
-    payment_status_object = Payment(payment_status=status_details)
-    payment_status_object.save()
-
-    # Retrieve the associated order using the purchase_order_id from the query parameters
-    print("here")
-    order_number = request.GET.get('purchase_order_id')
     try:
-      order = Order.objects.get(user=request.user, order_number=order_number)
+        order = Order.objects.get(user=request.user, order_number=order_number)
+
+        if status == 'Completed':
+            # Check if payment already exists
+            payment, created = Payment.objects.get_or_create(
+                pidx=updated_pidx,
+                defaults={"payment_status": {"status": status, "pidx": updated_pidx}}
+            )
+
+            # Update order if payment was created
+            if created:
+                order.payment = payment
+                order.is_ordered = True
+                order.save()
+
+                
+            # Send payment verification email
+            send_order_email(order, order.email, 'verified')
+
+            # Clear the cart
+            Cart.objects.filter(user=request.user).delete()
+
+            return redirect('order_complete', order_id=order.id)
+
+        return render(request, 'food/pay_error.html', {"error": "Order not found."})
+
     except Order.DoesNotExist:
         return render(request, 'food/pay_error.html', {"error": "Order not found."})
-    except Order.MultipleObjectsReturned:
-        return render(request, 'food/pay_error.html', {"error": "Multiple orders found. Please contact support."})
 
+    except IntegrityError:
+        return render(request, 'food/pay_error.html', {"error": "Duplicate payment detected. Please contact support."})
 
-    # Delete cart items
-    Cart.objects.filter(user=request.user).delete()
+    except Exception as e:
+        print(f"Error during payment verification: {e}")
+        return render(request, 'food/pay_error.html', {"error": "An unexpected error occurred. Please try again."})
 
-    return redirect('order_complete', order_id=order.id)
 
 
 
@@ -224,14 +242,11 @@ def order_complete(request, order_id):
     ordered_product = FoodOrder.objects.filter(order=order)
 
     subtotal = sum(item.price * item.quantity for item in ordered_product)
-
-    tax_data = json.loads(order.tax_data)
     
     context = {
         'order': order,
         'ordered_product': ordered_product,
-        'subtotal': subtotal,
-        'tax_data': tax_data,
+        'subtotal': subtotal
     }
     return render(request, 'order/order_complete.html', context)
 
