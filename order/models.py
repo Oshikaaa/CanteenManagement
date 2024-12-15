@@ -22,7 +22,7 @@ class Order(models.Model):
         ('New', 'New'),
         ('Accepted', 'Accepted'),
         ('Completed', 'Completed'),
-        ('Cancelled', 'Cancelled'),
+        ('Cancelled', 'Cancelled'),      
     )
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

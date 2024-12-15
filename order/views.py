@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.core.serializers.json import DjangoJSONEncoder
 
 from CanteenManagement.settings import KHALTI_SECRET_KEY
+from account.models import User
 from food.context_processor import get_cart_amounts
 from food.models import Cart, FoodItem
 from order.forms import OrderForm
@@ -12,6 +13,7 @@ from order.models import FoodOrder, Order, Payment
 from order.send_email import send_order_email
 from order.utils import generate_order_number
 from django.db.models import F
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
 def place_order(request):
@@ -252,9 +254,13 @@ def order_complete(request, order_id):
 
 
 
-def calculate_tax_total(tax_data):
-    tax_total = 0
-    for tax_type, tax_values in tax_data.items():
-        for percentage, tax_amount in tax_values.items():
-            tax_total += float(tax_amount)
-    return tax_total
+@login_required(login_url='login')
+@user_passes_test(lambda user: user.role == User.ADMIN)
+def pending_orders(request):
+    # Filter all orders except those with "Completed" status
+    not_completed_orders = Order.objects.filter(status__in=["New", "Accepted"]).prefetch_related('foodorder_set').order_by('-created_at')
+
+    context = {
+        'not_completed_orders': not_completed_orders
+    }
+    return render(request, 'order/pending_orders.html', context)

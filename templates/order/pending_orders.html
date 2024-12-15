@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
-<!-- All Orders Section -->
+{% block content %}
+{% include 'includes/alerts.html' %}
 <div class="row mt-5">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h2>All Orders</h2>
+                <h2>Not Completed Orders</h2>
                 <table id="basic-datatable" class="table table-striped dt-responsive nowrap">
                     <thead>
                         <tr>
@@ -16,11 +16,13 @@
                             <th>Quantity</th>
                             <th>Amount (Nrs.)</th>
                             <th>Order Date</th>
-                            <th scope="col"> Details</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for order in all_orders %}
+                        {% for order in not_completed_orders %}
                             {% for food in order.foodorder_set.all %}
                             <tr>
                                 <td>{{ order.order_number }}</td>
@@ -39,14 +41,32 @@
                                 <td>{{ food.quantity }}</td>
                                 <td>Nrs. {{ food.amount|floatformat:2 }}</td>
                                 <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
-                                <td><a href="{% url 'admin_order_detail' order.order_number %}" class="btn btn rounded-lg" style="background-color:#2B3D51;color:white;">Details</a></td>
-                            
+                                <td>
+                                    <span class="badge 
+                                        {% if order.status == 'New' %} badge-primary 
+                                        {% elif order.status == 'Accepted' %} badge-info 
+                                        {% elif order.status == 'Completed' %} badge-success 
+                                        {% elif order.status == 'Cancelled' %} badge-danger 
+                                        {% else %} badge-secondary 
+                                        {% endif %}">
+                                        {{ order.status }}
+                                    </span>
+                                </td>
                                 
+                                <td>
+                                    <a href="{% url 'admin_order_detail' order.order_number %}" 
+                                       class="btn btn rounded-lg" 
+                                       style="background-color:#2B3D51;color:white;">Details</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'send_order_ready_email' order.order_number %}" 
+                                       class="btn btn-success rounded-lg ml-2">Order Ready</a>
+                                </td>
                             </tr>
                             {% endfor %}
                         {% empty %}
                         <tr>
-                            <td colspan="6">No orders found</td>
+                            <td colspan="8">No not completed orders found</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -55,5 +75,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
