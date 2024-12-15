@@ -55,38 +55,22 @@
                                             {% endif %}
                                             <td><b>{{ item.food_item.food_name }}</b></td>
                                             <td>{{ item.quantity }}</td>
-                                            <td style="right-padding:0;"> रु‎{{ item.food_item.total_cost }}</td>
+                                            <td style="right-padding:0;"> Nrs.{{ item.food_item.total_cost }}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
 
                                 <ul>
-                                    <li style="list-style-type: none;">
-                                        Subtotal
-                                        <span class="price float-right">
-                                            <span class="currency">रु‎</span>
-                                            <span id="subtotal">{{ subtotal }}</span>
-                                        </span>
-                                    </li>
+                                    
 
-                                    {% for key, value in tax_dict.items %}
-                                        {% for i, j in value.items %}
-                                            <li style="list-style-type: none;">
-                                                {{ key }} <small>({{ i }}%)</small>
-                                                <span class="price float-right">
-                                                    <span class="currency">रु‎</span>
-                                                    <span id="tax-{{ key }}">{{ j }}</span>
-                                                </span>
-                                            </li>
-                                        {% endfor %}
-                                    {% endfor %}
+                                    
 
 
                                     <li style="list-style-type: none; font-weight: 600;">
                                         TOTAL
                                         <span class="price float-right">
-                                            <span class="currency">रु‎</span>
+                                            <span class="currency">Nrs.</span>
                                             <span id="total">{{ grand_total }}</span>
                                         </span>
                                     </li>
